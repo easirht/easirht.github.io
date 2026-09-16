@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects — Md. Easir Rahat</title>
+<meta name="description" content="Academic and team engineering projects by Md. Easir Rahat.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header" id="top">
+  <div class="wrap header-inner">
+    <a class="wordmark" href="index.html#top">Easir Rahat</a>
+    <nav class="main-nav" id="main-nav">
+      <a href="index.html#about">About</a>
+      <a href="research.html">Research</a>
+      <a href="projects.html" class="is-current">Projects</a>
+      <a href="simulation.html">Simulation</a>
+      <a href="internship.html">Internship</a>
+      <a href="activities.html">Activities & Awards</a>
+      <a href="skills.html">Skills</a>
+      <a href="certifications.html">Certifications</a>
+      <a href="hobbies.html">Hobbies</a>
+      <a href="index.html#contact" class="nav-cta">Get in Touch</a>
+    </nav>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <section class="page-hero">
+    <div class="wrap">
+      <a class="back-link" href="index.html">&larr; Back to Home</a>
+      <h1>Projects</h1>
+      <p class="page-hero-desc">Hands-on builds spanning embedded control, mechanical design, and team competition work.</p>
+    </div>
+  </section>
+<section class="section alt" id="projects">
+    <div class="wrap">
+      <h2>Projects</h2>
+
+      <div class="project-grid">
+        <article class="project-card">
+          <div class="project-media two-up">
+            <img src="assets/img/robotic-arm-photo.png" alt="Three-axis robotic arm">
+            <img src="assets/img/robotic-arm-circuit.png" alt="Robotic arm circuit schematic">
+          </div>
+          <p class="card-eyebrow">Academic Project</p>
+          <h3>Three-Axis Robotic Arm</h3>
+          <p>Designed and built a robotic arm with three-axis rotation using servo motors and an Arduino Uno, including full circuit design and button-based control logic.</p>
+          <div class="tag-row small">
+            <span class="tag">Arduino Uno</span>
+            <span class="tag">Servo Motors</span>
+            <span class="tag">Circuit Design</span>
+          </div>
+          <details class="project-details">
+            <summary>View Project Details →</summary>
+            <p>
+              The arm uses three servo motors, each independently controlled through a
+              dedicated push-button pair wired to the Arduino Uno's digital pins — one
+              button to rotate a joint forward, the other in reverse — rather than a
+              single continuous-motion controller. The circuit was built and tested on a
+              breadboard before being wired into the final frame, with each servo's power
+              draw and signal line kept separate to avoid voltage drops affecting motion
+              accuracy. The build served as a hands-on introduction to embedded control
+              logic — sequencing multiple actuators from simple digital inputs — which is
+              the same basic principle scaled up in most automation and robotics systems.
+            </p>
+          </details>
+        </article>
+
+        <article class="project-card">
+          <div class="project-media placeholder" data-label="Add crane prototype photo">
+          </div>
+          <p class="card-eyebrow">Academic Project</p>
+          <h3>Object-Pulling Crane Prototype</h3>
+          <p>Developed a working crane prototype, applying core principles of mechanical linkages and load handling.</p>
+          <div class="tag-row small">
+            <span class="tag">Mechanical Linkages</span>
+            <span class="tag">Load Handling</span>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="carousel" data-carousel>
+            <div class="carousel-track">
+              <img src="assets/img/cad/cad-part1.jpg" alt="CAD part model 1 — mounting bracket">
+              <img src="assets/img/cad/cad-part2.jpg" alt="CAD part model 2 — linkage bracket">
+              <img src="assets/img/cad/cad-part3.jpg" alt="CAD part model 3 — connecting link">
+              <img src="assets/img/cad/cad-part4.jpg" alt="CAD part model 4 — bearing hub">
+              <img src="assets/img/cad/cad-part7.jpg" alt="CAD part model 7 — small lever">
+              <img src="assets/img/cad/cad-part8.jpg" alt="CAD part model 8 — angled bracket">
+              <img src="assets/img/cad/cad-part9.jpg" alt="CAD part model 9 — mounting flange">
+              <img src="assets/img/cad/cad-part10.jpg" alt="CAD part model 10 — bracket with slot">
+              <img src="assets/img/cad/cad-part20.jpg" alt="CAD part model 20 — rocker link">
+            </div>
+            <button class="carousel-arrow prev" aria-label="Previous photo">‹</button>
+            <button class="carousel-arrow next" aria-label="Next photo">›</button>
+            <div class="carousel-dots"></div>
+          </div>
+          <p class="card-eyebrow">Academic Project</p>
+          <h3>Mechanical Parts Design (AutoCAD)</h3>
+          <p>Modeled various mechanical parts in AutoCAD, gaining hands-on experience in 2D/3D drafting and engineering drawing.</p>
+          <div class="tag-row small">
+            <span class="tag">AutoCAD</span>
+            <span class="tag">2D/3D Drafting</span>
+          </div>
+        </article>
+
+        <article class="project-card project-card-wide">
+          <div class="carousel" data-carousel>
+            <div class="carousel-track">
+              <img src="assets/img/gokart-build-day.jpg" alt="Chassis and steering assembly in progress">
+              <img src="assets/img/gokart-build-night1.jpg" alt="Late-night fabrication and wiring">
+              <img src="assets/img/gokart-build-night2.jpg" alt="Team working through final assembly">
+              <img src="assets/img/gokart-final.jpg" alt="Completed Team Annexe RUET Go-Kart">
+              <img src="assets/img/gokart-test-drive.jpg" alt="First test run of the completed Go-Kart">
+            </div>
+            <button class="carousel-arrow prev" aria-label="Previous photo">‹</button>
+            <button class="carousel-arrow next" aria-label="Next photo">›</button>
+            <div class="carousel-dots"></div>
+          </div>
+          <p class="card-eyebrow">Team Project — Formula Kart Design Challenge</p>
+          <h3>Go-Kart Quality Control — Team Annexe RUET</h3>
+          <p>Led quality control for the design and manufacturing of a Go-Kart competing in the FKDC — materials selection, dimensional analysis, and component sourcing, from workshop fabrication through to the final test run.</p>
+          <div class="tag-row small">
+            <span class="tag">Quality Control</span>
+            <span class="tag">Dimensional Analysis</span>
+            <span class="tag">ANSYS</span>
+            <span class="tag">FKDC</span>
+          </div>
+          <details class="project-details">
+            <summary>View Project Details →</summary>
+            <p>
+              As QC Team Lead, I was responsible for the chassis and drivetrain components
+              standing up to real competition conditions rather than just passing a bench
+              test. That meant checking incoming materials and dimensions against the
+              design tolerances before parts went into the frame, tracking down fit issues
+              during welding and assembly (visible in the late-night build sessions), and
+              sourcing components on a tight budget without compromising the safety-critical
+              parts — steering, brakes, and the roll structure. The kart competed at the
+              Formula Kart Design Challenge (FKDC) in Coimbatore, India, representing Team
+              Annexe RUET, and the team used ANSYS for structural checks on the chassis
+              design before fabrication began.
+            </p>
+          </details>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>&copy; <span id="year"></span> Md. Easir Rahat. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

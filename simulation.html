@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulation — Md. Easir Rahat</title>
+<meta name="description" content="Simulation work by Md. Easir Rahat: brake system structural analysis, pipe flow simulation, and gear contact stress analysis.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header" id="top">
+  <div class="wrap header-inner">
+    <a class="wordmark" href="index.html#top">Easir Rahat</a>
+    <nav class="main-nav" id="main-nav">
+      <a href="index.html#about">About</a>
+      <a href="research.html">Research</a>
+      <a href="projects.html">Projects</a>
+      <a href="simulation.html" class="is-current">Simulation</a>
+      <a href="internship.html">Internship</a>
+      <a href="activities.html">Activities &amp; Awards</a>
+      <a href="skills.html">Skills</a>
+      <a href="certifications.html">Certifications</a>
+      <a href="hobbies.html">Hobbies</a>
+      <a href="index.html#contact" class="nav-cta">Get in Touch</a>
+    </nav>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <section class="page-hero">
+    <div class="wrap">
+      <a class="back-link" href="index.html">&larr; Back to Home</a>
+      <h1>Simulation</h1>
+      <p class="page-hero-desc">
+        Applied simulation work bridging mechanical systems and computational modeling —
+        part of the research grounding described on the <a href="research.html">Research page</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ SIMULATION ============ -->
+  <section class="section" id="simulation">
+    <div class="wrap">
+
+      <!-- ============ BRAKE ============ -->
+      <div class="sim-feature">
+        <p class="card-eyebrow">Simulation Study — ANSYS Static Structural</p>
+        <h3>Brake System Simulation</h3>
+        <p class="about-copy">
+          A static structural analysis of a wheel brake/lever assembly in ANSYS, evaluating
+          equivalent (von-Mises) stress and displacement under an applied braking load. The
+          arm was fixed at its mounting point, the rotor rim was given a frictionless
+          support, and a 300 lbf force was applied at the lever end to represent the braking
+          input; a displacement constraint at the pivot hole restrained out-of-plane motion
+          while allowing rotation.
+        </p>
+
+        <div class="sim-results">
+          <div class="fact"><span class="fact-label">Applied Force</span><span class="fact-value">300 lbf</span></div>
+          <div class="fact"><span class="fact-label">Peak Stress (assembly)</span><span class="fact-value">3.496 &times; 10&#8309; psf</span></div>
+          <div class="fact"><span class="fact-label">Peak Stress (lever arm)</span><span class="fact-value">3.496 &times; 10&#8309; psf</span></div>
+          <div class="fact"><span class="fact-label">Min Stress</span><span class="fact-value">99.08 psf</span></div>
+        </div>
+
+        <div class="tag-row small">
+          <span class="tag">Brake Assembly</span>
+          <span class="tag">von-Mises Stress</span>
+          <span class="tag">FEA</span>
+          <span class="tag">ANSYS Static Structural</span>
+        </div>
+
+        <div class="carousel" data-carousel>
+          <div class="carousel-track">
+            <img src="assets/img/simulation/brake/brake-mesh.png" alt="Meshed brake rotor and lever assembly, ANSYS Static Structural">
+            <img src="assets/img/simulation/brake/brake-bc-force.png" alt="Applied 300 lbf force boundary condition at the lever end">
+            <img src="assets/img/simulation/brake/brake-bc-fixed-support.png" alt="Fixed support boundary condition at the arm mounting point">
+            <img src="assets/img/simulation/brake/brake-bc-frictionless-support.png" alt="Frictionless support boundary condition on the rotor rim">
+            <img src="assets/img/simulation/brake/brake-bc-displacement.png" alt="Displacement boundary condition restraining out-of-plane motion at the pivot">
+            <img src="assets/img/simulation/brake/brake-stress-assembly.png" alt="Equivalent von-Mises stress across the full brake assembly">
+            <img src="assets/img/simulation/brake/brake-stress-lever.png" alt="Equivalent von-Mises stress on the lever arm component">
+          </div>
+          <button class="carousel-arrow prev" aria-label="Previous photo">&lsaquo;</button>
+          <button class="carousel-arrow next" aria-label="Next photo">&rsaquo;</button>
+          <div class="carousel-dots"></div>
+        </div>
+      </div>
+
+      <!-- ============ PIPE ============ -->
+      <div class="sim-feature">
+        <p class="card-eyebrow">Simulation Study — SolidWorks Flow Simulation</p>
+        <h3>Pipe Flow Simulation</h3>
+        <p class="about-copy">
+          An internal flow simulation of a multi-bend piping loop in SolidWorks Flow
+          Simulation, looking at fluid temperature, flow trajectories, and boundary layer
+          development through the bends and junctions. Flow trajectories are colored by
+          vorticity, highlighting where the flow separates and swirls as it turns through
+          each elbow.
+        </p>
+
+        <div class="sim-results">
+          <div class="fact"><span class="fact-label">Fluid Temperature</span><span class="fact-value">293.17 – 293.21 K</span></div>
+          <div class="fact"><span class="fact-label">Peak Vorticity</span><span class="fact-value">1856.77 s&#8315;&#185;</span></div>
+          <div class="fact"><span class="fact-label">Max Boundary Layer Thickness</span><span class="fact-value">0.004 m</span></div>
+          <div class="fact"><span class="fact-label">Solver</span><span class="fact-value">SolidWorks Flow Simulation</span></div>
+        </div>
+
+        <div class="tag-row small">
+          <span class="tag">Internal Flow</span>
+          <span class="tag">CFD</span>
+          <span class="tag">SolidWorks Flow Simulation</span>
+          <span class="tag">Vorticity</span>
+        </div>
+
+        <div class="carousel" data-carousel>
+          <div class="carousel-track">
+            <img src="assets/img/simulation/pipe/pipe-geometry.png" alt="Pipe loop geometry used in the flow simulation">
+            <img src="assets/img/simulation/pipe/pipe-temperature.png" alt="Fluid temperature contour across the pipe loop, 293.17 to 293.21 K">
+            <img src="assets/img/simulation/pipe/pipe-flow-trajectories.png" alt="Flow trajectories colored by vorticity, peak 1856.77 per second">
+            <img src="assets/img/simulation/pipe/pipe-boundary-layer.png" alt="Boundary layer thickness contour across the pipe loop, max 0.004 meters">
+            <img src="assets/img/simulation/pipe/pipe-flow-animation.gif" alt="Animated flow simulation through the pipe loop">
+          </div>
+          <button class="carousel-arrow prev" aria-label="Previous photo">&lsaquo;</button>
+          <button class="carousel-arrow next" aria-label="Next photo">&rsaquo;</button>
+          <div class="carousel-dots"></div>
+        </div>
+
+        <p class="sim-download">
+          <a href="assets/cad/pipe.SLDPRT" download>Download Pipe Model (SolidWorks .SLDPRT) &rarr;</a>
+          &nbsp;&middot;&nbsp;
+          <a href="assets/cad/pipe_igs.IGS" download>Download Pipe Model (.IGS) &rarr;</a>
+        </p>
+      </div>
+
+      <!-- ============ GEAR CONTACT STRESS ANALYSIS ============ -->
+      <div class="sim-feature">
+        <p class="card-eyebrow">Simulation Study — ANSYS Static Structural</p>
+        <h3>Gear Contact Stress Analysis</h3>
+        <p class="about-copy">
+          A static structural analysis of a meshing spur gear pair in ANSYS, evaluating
+          equivalent (von-Mises) stress, contact behavior, and total deformation under an
+          applied torque. Equal and opposite moments were applied to the driver and driven
+          gears to represent the transmitted torque, with a fixed support at both bores;
+          the mesh was refined at the tooth contact zone to resolve the local stress
+          concentration.
+        </p>
+
+        <div class="sim-results">
+          <div class="fact"><span class="fact-label">Applied Moment</span><span class="fact-value">274 lbf&middot;in (each gear, opposing)</span></div>
+          <div class="fact"><span class="fact-label">Peak Stress (full model)</span><span class="fact-value">390.89 psi</span></div>
+          <div class="fact"><span class="fact-label">Peak Stress (contact zone)</span><span class="fact-value">322.14 psi</span></div>
+          <div class="fact"><span class="fact-label">Max Total Deformation</span><span class="fact-value">1.535 &times; 10&#8315;&#8309; in</span></div>
+        </div>
+
+        <div class="tag-row small">
+          <span class="tag">Spur Gears</span>
+          <span class="tag">Contact Stress</span>
+          <span class="tag">von-Mises Stress</span>
+          <span class="tag">FEA</span>
+          <span class="tag">ANSYS Static Structural</span>
+        </div>
+
+        <div class="carousel" data-carousel>
+          <div class="carousel-track">
+            <img src="assets/img/simulation/gear/gear-mesh.png" alt="Meshed spur gear pair model, ANSYS Static Structural">
+            <img src="assets/img/simulation/gear/gear-bc-moment-driver.png" alt="Applied moment boundary condition on the driver gear, 274 lbf-in">
+            <img src="assets/img/simulation/gear/gear-bc-moment-driven.png" alt="Applied reaction moment boundary condition on the driven gear">
+            <img src="assets/img/simulation/gear/gear-bc-fixed-support.png" alt="Fixed support boundary condition at both gear bores">
+            <img src="assets/img/simulation/gear/gear-stress-full-mesh.png" alt="Equivalent von-Mises stress contour across the gear pair, max 390.89 psi">
+            <img src="assets/img/simulation/gear/gear-stress-contact-zoom.png" alt="Equivalent von-Mises stress at the tooth contact region, max 322.14 psi">
+            <img src="assets/img/simulation/gear/gear-total-deformation.png" alt="Total deformation contour of the gear pair, max 1.535e-5 in">
+          </div>
+          <button class="carousel-arrow prev" aria-label="Previous photo">&lsaquo;</button>
+          <button class="carousel-arrow next" aria-label="Next photo">&rsaquo;</button>
+          <div class="carousel-dots"></div>
+        </div>
+
+        <p class="sim-download">
+          <a href="assets/cad/gear_report_3.SLDASM" download>Download Gear Assembly (SolidWorks .SLDASM) &rarr;</a>
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>&copy; <span id="year"></span> Md. Easir Rahat. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
