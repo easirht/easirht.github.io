@@ -39,7 +39,7 @@
     <div class="wrap">
       <a class="back-link" href="index.html">&larr; Back to Home</a>
       <h1>Projects</h1>
-      <p class="page-hero-desc">Hands-on builds spanning embedded control, mechanical design, and team competition work.</p>
+      <p class="page-hero-desc">Hands-on builds spanning deep learning, embedded control, mechanical design, and team competition work.</p>
     </div>
   </section>
 <section class="section alt" id="projects">
@@ -47,6 +47,53 @@
       <h2>Projects</h2>
 
       <div class="project-grid">
+        <article class="project-card project-card-wide">
+          <div class="carousel carousel-results" data-carousel>
+            <div class="carousel-track">
+              <img src="assets/img/animal-classifier/mobilenetv2_improved_confusion_matrix.png" alt="Confusion matrix of the animal classifier on 2,619 held-out test images" loading="lazy">
+              <img src="assets/img/animal-classifier/training_curves_mobilenetv2_improved.png" alt="Training curves showing accuracy, loss and the cosine-decay learning rate" loading="lazy">
+              <img src="assets/img/animal-classifier/mobilenetv2_improved_per_class_metrics.png" alt="Per-class precision, recall and F1 of the animal classifier" loading="lazy">
+            </div>
+            <button class="carousel-arrow prev" aria-label="Previous figure">‹</button>
+            <button class="carousel-arrow next" aria-label="Next figure">›</button>
+            <div class="carousel-dots"></div>
+          </div>
+          <p class="card-eyebrow">Personal Project — Deep Learning</p>
+          <h3>Animal Image Classifier — Transfer Learning with MobileNetV2</h3>
+          <p>Fine-tuned MobileNetV2 on a 10-class animal dataset (about 26,000 images) and evaluated it on a fixed, leak-free test split: 97.4% accuracy and 0.971 macro-F1 on 2,619 held-out images, in a 24&nbsp;MB model.</p>
+          <div class="tag-row small">
+            <span class="tag">TensorFlow / Keras</span>
+            <span class="tag">Transfer Learning</span>
+            <span class="tag">MobileNetV2</span>
+            <span class="tag">AdamW + Cosine LR</span>
+            <span class="tag">Model Evaluation</span>
+          </div>
+          <details class="project-details">
+            <summary>View Project Details →</summary>
+            <p>
+              I compared a baseline recipe (Adam, constant learning rate, last 30 layers fine-tuned)
+              with an improved one (AdamW, cosine-decay learning rate, last 50 layers with frozen
+              BatchNorm, stronger augmentation). Test accuracy rose from 96.9% to 97.4% and macro-F1
+              from 0.963 to 0.971, but a paired McNemar test (p&nbsp;=&nbsp;0.12) shows the gain is
+              within noise, which suggests MobileNetV2 is close to the ceiling for this dataset.
+            </p>
+            <p>
+              Along the way I found and fixed an evaluation bug: a reshuffled test set had misaligned
+              labels and predictions, giving impossible Top-2 accuracy. I rebuilt the pipeline with an
+              explicit stratified split and a single unshuffled prediction pass. The most confident
+              errors turned out to include dataset labeling mistakes (a dragonfly and a beetle labeled
+              as butterfly, a horse labeled as cow), so the reported accuracy is probably a slight
+              underestimate.
+            </p>
+          </details>
+          <div class="project-links">
+            <a class="btn btn-primary btn-sm" href="https://github.com/easirht/animal-classifier" target="_blank" rel="noopener">View on GitHub</a>
+            <!-- When your Hugging Face Space is live, remove these comment marks and paste its link:
+            <a class="btn btn-outline btn-sm" href="https://huggingface.co/spaces/YOUR-USERNAME/animal-classifier" target="_blank" rel="noopener">Live Demo</a>
+            -->
+          </div>
+        </article>
+
         <article class="project-card">
           <div class="project-media two-up">
             <img src="assets/img/robotic-arm-photo.png" alt="Three-axis robotic arm">

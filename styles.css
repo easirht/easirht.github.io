@@ -311,6 +311,13 @@ img { max-width: 100%; display: block; }
 
 .carousel-sm { aspect-ratio: 16/9; margin-top: 16px; max-width: 480px; }
 
+/* ---- Result-figure carousel + project link buttons (animal classifier card) ---- */
+.carousel.carousel-results { aspect-ratio: 16/9; background: #fff; max-width: 900px; margin: 0 auto 18px; border: 1px solid var(--line); }
+.carousel.carousel-results .carousel-track img { object-fit: contain; background: #fff; }
+.project-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+.btn.btn-sm { padding: 8px 18px; font-size: 13.5px; }
+
+
 /* ==========================================================================
    PAGE HERO (sub-page banner)
    ========================================================================== */
