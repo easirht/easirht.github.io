@@ -39,7 +39,7 @@
     <div class="wrap">
       <a class="back-link" href="index.html">&larr; Back to Home</a>
       <h1>Projects</h1>
-      <p class="page-hero-desc">Hands-on builds spanning deep learning, embedded control, mechanical design, and team competition work.</p>
+      <p class="page-hero-desc">Hands-on builds spanning physics-informed machine learning, deep learning, embedded control, mechanical design, and team competition work.</p>
     </div>
   </section>
 <section class="section alt" id="projects">
@@ -47,6 +47,49 @@
       <h2>Projects</h2>
 
       <div class="project-grid">
+        <article class="project-card project-card-wide">
+          <div class="carousel carousel-results" data-carousel>
+            <div class="carousel-track">
+              <img src="assets/img/pinn-heat/comparison.png" alt="Accuracy versus runtime for explicit finite differences, Crank-Nicolson and the PINN" loading="lazy">
+              <img src="assets/img/pinn-heat/inverse_result.png" alt="Estimated thermal diffusivity converging to the true value during PINN training" loading="lazy">
+              <img src="assets/img/pinn-heat/result.png" alt="Exact solution, PINN prediction and absolute error for 1D heat conduction" loading="lazy">
+            </div>
+            <button class="carousel-arrow prev" aria-label="Previous figure">‹</button>
+            <button class="carousel-arrow next" aria-label="Next figure">›</button>
+            <div class="carousel-dots"></div>
+          </div>
+          <p class="card-eyebrow">Personal Project — Physics-Informed Machine Learning</p>
+          <h3>Physics-Informed Neural Networks for 1D Heat Conduction</h3>
+          <p>Trained a PINN on the transient heat equation using only the governing equation and boundary/initial conditions (0.31% relative L2 error), benchmarked it against finite-difference solvers, and used it to recover an unknown thermal diffusivity from 30 noisy measurements (0.16% error on clean data, 2.9% at 5% noise). Everything runs on a CPU laptop.</p>
+          <div class="tag-row small">
+            <span class="tag">PyTorch</span>
+            <span class="tag">PINN</span>
+            <span class="tag">Heat Transfer</span>
+            <span class="tag">Finite Differences</span>
+            <span class="tag">Inverse Problems</span>
+          </div>
+          <details class="project-details">
+            <summary>View Project Details →</summary>
+            <p>
+              The forward PINN (three hidden layers of 32 tanh units, 5,000 Adam epochs) needs no
+              simulation data. I compared it with explicit FTCS and Crank-Nicolson solvers against
+              the analytical solution. On this simple linear problem the classical solvers win
+              clearly: Crank-Nicolson on an 11 × 11 grid matches the PINN's error (about 3e-3) in
+              roughly 0.3 ms versus 42–65 s of PINN training, and at 161 × 161 it reaches 1.2e-5.
+              The PINN is therefore not a competitive forward solver here, and I report that as a result.
+            </p>
+            <p>
+              The inverse problem is where the PINN is useful: with the diffusivity as a trainable
+              parameter, starting from a guess five times too large, it recovers the true value in a
+              single training run. Limitations are documented in the repository: every number comes
+              from a single random seed, the measurements are synthetic, boundary and initial
+              conditions are assumed known exactly, and the network was not tuned.
+            </p>
+          </details>
+          <div class="project-links">
+            <a class="btn btn-primary btn-sm" href="https://github.com/easirht/pinn-heat-conduction" target="_blank" rel="noopener">View on GitHub</a>
+          </div>
+        </article>
         <article class="project-card project-card-wide">
           <div class="carousel carousel-results" data-carousel>
             <div class="carousel-track">
