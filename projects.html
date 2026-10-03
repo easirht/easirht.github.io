@@ -39,7 +39,7 @@
     <div class="wrap">
       <a class="back-link" href="index.html">&larr; Back to Home</a>
       <h1>Projects</h1>
-      <p class="page-hero-desc">Hands-on builds spanning physics-informed machine learning, deep learning, embedded control, mechanical design, and team competition work.</p>
+      <p class="page-hero-desc">Hands-on builds spanning physics-informed machine learning, predictive maintenance, deep learning, embedded control, mechanical design, and team competition work.</p>
     </div>
   </section>
 <section class="section alt" id="projects">
@@ -47,6 +47,54 @@
       <h2>Projects</h2>
 
       <div class="project-grid">
+        <article class="project-card project-card-wide">
+          <div class="carousel carousel-results" data-carousel>
+            <div class="carousel-track">
+              <img src="assets/img/bearing/06_multi_seed_comparison.png" alt="Cross-fault-size macro F1 for time-domain, envelope and combined features over 10 seeds" loading="lazy">
+              <img src="assets/img/bearing/04_cross_size_confusion.png" alt="Confusion matrices when training on one fault size and testing on the other" loading="lazy">
+              <img src="assets/img/bearing/01_raw_signals.png" alt="CWRU vibration signals for normal, inner race, ball and outer race conditions" loading="lazy">
+            </div>
+            <button class="carousel-arrow prev" aria-label="Previous figure">‹</button>
+            <button class="carousel-arrow next" aria-label="Next figure">›</button>
+            <div class="carousel-dots"></div>
+          </div>
+          <p class="card-eyebrow">Personal Project — Predictive Maintenance &amp; Vibration Analysis</p>
+          <h3>Bearing Fault Diagnosis: Cross-Fault-Size Generalization (CWRU)</h3>
+          <p>Studied whether bearing fault classifiers that look accurate on the CWRU dataset still work when the fault size changes. Cross-load testing gave 100% accuracy, but training on one fault size and testing on another dropped macro-F1 to roughly 0.25&ndash;0.57. Envelope-spectrum features based on bearing fault frequencies (BPFO, BPFI, BSF) raised Random Forest macro-F1 from 0.26 to 0.68 in one direction (0.014 in &rarr; 0.007 in) and did not help in the other. Includes a deployed Streamlit monitoring dashboard.</p>
+          <div class="tag-row small">
+            <span class="tag">Python</span>
+            <span class="tag">scikit-learn</span>
+            <span class="tag">Envelope Spectrum</span>
+            <span class="tag">Vibration Analysis</span>
+            <span class="tag">Streamlit</span>
+          </div>
+          <details class="project-details">
+            <summary>View Project Details →</summary>
+            <p>
+              Using the CWRU 12 kHz drive-end data (loads 0&ndash;3 HP, normal, inner race, ball and
+              outer race faults at 0.007 and 0.014 in), I cut signals into overlapping windows and
+              extracted time-domain features (RMS, kurtosis, crest factor and others) and
+              envelope-spectrum features: band-pass filtering, Hilbert envelope, and relative energy
+              at the fault frequencies computed from each load's shaft speed. Models were a Random
+              Forest and an RBF SVM, evaluated with leave-one-load-out and then cross-fault-size
+              splits, repeated over 10 seeds. Normal recordings are shared between sizes, so each was
+              split in halves to avoid leakage.
+            </p>
+            <p>
+              The result is mixed, and I report it that way: envelope features helped strongly when
+              training on 0.014 in and testing on 0.007 in, but not in the reverse direction, and
+              combining them with time-domain features did not beat envelope features alone. Limitations
+              are documented in the repository: each (size, load, class) is a single recording, so the
+              standard deviations reflect only window sampling and model randomness; only two fault
+              sizes were used; the SVM was not tuned; and the dashboard's demo model is trained on all
+              data, so it is a workflow demo rather than a valid test.
+            </p>
+          </details>
+          <div class="project-links">
+            <a class="btn btn-primary btn-sm" href="https://github.com/easirht/bearing-predictive-maintenance" target="_blank" rel="noopener">View on GitHub</a>
+            <a class="btn btn-outline btn-sm" href="https://bearing-predictive-maintenance-dxcmyvq5bs7pwqzzerkyex.streamlit.app" target="_blank" rel="noopener">Live Demo</a>
+          </div>
+        </article>
         <article class="project-card project-card-wide">
           <div class="carousel carousel-results" data-carousel>
             <div class="carousel-track">
