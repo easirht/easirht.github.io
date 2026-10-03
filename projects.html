@@ -39,7 +39,7 @@
     <div class="wrap">
       <a class="back-link" href="index.html">&larr; Back to Home</a>
       <h1>Projects</h1>
-      <p class="page-hero-desc">Hands-on builds spanning physics-informed machine learning, predictive maintenance, deep learning, embedded control, mechanical design, and team competition work.</p>
+      <p class="page-hero-desc">Hands-on builds spanning physics-informed machine learning, predictive maintenance, optimization, deep learning, embedded control, mechanical design, and team competition work.</p>
     </div>
   </section>
 <section class="section alt" id="projects">
@@ -138,6 +138,50 @@
             <a class="btn btn-primary btn-sm" href="https://github.com/easirht/pinn-heat-conduction" target="_blank" rel="noopener">View on GitHub</a>
           </div>
         </article>
+        <article class="project-card project-card-wide">
+          <div class="carousel carousel-results" data-carousel>
+            <div class="carousel-track">
+              <img src="assets/img/car-sim/track.png" alt="Speed-colored race track: red marks slow corners, green marks fast sections" loading="lazy">
+              <img src="assets/img/car-sim/setup.png" alt="Setup sliders for tire pressure, suspension, downforce, brake bias and gear ratio" loading="lazy">
+              <img src="assets/img/car-sim/learning-curve.png" alt="AI learning curve: lap score per run with best-so-far line" loading="lazy">
+              <img src="assets/img/car-sim/comparison.png" alt="Mean best lap score of Bayesian optimization versus random search over 20 trials" loading="lazy">
+            </div>
+            <button class="carousel-arrow prev" aria-label="Previous figure">‹</button>
+            <button class="carousel-arrow next" aria-label="Next figure">›</button>
+            <div class="carousel-dots"></div>
+          </div>
+          <p class="card-eyebrow">Personal Project — Optimization &amp; Vehicle Dynamics</p>
+          <h3>AI Car Tuning Simulator</h3>
+          <p>An interactive browser simulator where a race car's setup (tire pressure, suspension, downforce, brake bias, gear ratio) is tuned manually or by a Bayesian-optimization assistant built from scratch. A quasi-steady-state lap-time model with drag, downforce and tire-grip equations makes each lap cheap enough to evaluate thousands of setups. Averaged over 20 independent trials of 30 runs, the Gaussian-process tuner reached about 77.7 s versus 79.3 s for random search. Runs in plain JavaScript with no backend.</p>
+          <div class="tag-row small">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Bayesian Optimization</span>
+            <span class="tag">Gaussian Process</span>
+            <span class="tag">Vehicle Dynamics</span>
+            <span class="tag">Lap-Time Simulation</span>
+          </div>
+          <details class="project-details">
+            <summary>View Project Details →</summary>
+            <p>
+              The track is a closed spline with curvature computed numerically. For each 10 m section
+              the model finds the maximum cornering speed from tire grip and downforce, then runs a
+              braking pass and an acceleration pass with a friction circle. Setup parameters have built-in
+              trade-offs (for example, more downforce improves cornering but lowers top speed), so no
+              single extreme setup wins. The optimizer fits a Gaussian-process surrogate to past laps and
+              picks the next setup by Expected Improvement.
+            </p>
+            <p>
+              Limitations: the physics is deliberately simplified (single-gear model, no tire temperature
+              or wear, no weight-transfer dynamics), so the "best setup" is optimal for this model, not
+              for a real car. The AI advantage over random search is modest and appears after about ten runs.
+            </p>
+          </details>
+          <div class="project-links">
+            <a class="btn btn-primary btn-sm" href="https://github.com/easirht/car-tuning-sim" target="_blank" rel="noopener">View on GitHub</a>
+            <a class="btn btn-outline btn-sm" href="https://easirht.github.io/car-tuning-sim/" target="_blank" rel="noopener">Live Demo</a>
+          </div>
+        </article>
+
         <article class="project-card project-card-wide">
           <div class="carousel carousel-results" data-carousel>
             <div class="carousel-track">
