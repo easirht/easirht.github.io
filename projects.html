@@ -39,7 +39,7 @@
     <div class="wrap">
       <a class="back-link" href="index.html">&larr; Back to Home</a>
       <h1>Projects</h1>
-      <p class="page-hero-desc">Hands-on builds spanning physics-informed machine learning, predictive maintenance, optimization, deep learning, embedded control, mechanical design, and team competition work.</p>
+      <p class="page-hero-desc">Hands-on builds spanning physics-informed machine learning, predictive maintenance, optimization, deep learning, embedded control, mechanical design, game development, and team competition work.</p>
     </div>
   </section>
 <section class="section alt" id="projects">
@@ -226,6 +226,44 @@
             <!-- When your Hugging Face Space is live, remove these comment marks and paste its link:
             <a class="btn btn-outline btn-sm" href="https://huggingface.co/spaces/YOUR-USERNAME/animal-classifier" target="_blank" rel="noopener">Live Demo</a>
             -->
+          </div>
+        </article>
+
+        <article class="project-card project-card-wide">
+          <div class="project-media"><img src="assets/img/spiral-race/board.png" alt="Spiral Race gameplay: 50-cell spiral board with four player tokens, boost and trap cells, and the glowing core" loading="lazy"></div>
+          <p class="card-eyebrow">Personal Project — Game Development &amp; Web Deployment</p>
+          <h3>Spiral Race: Multiplayer Spiral Board Game</h3>
+          <p>Built a 2D board game in Python and Pygame where players race along a 50-cell inward spiral to a glowing core. It has a single-player mode against an AI, local 2&ndash;4 player mode, and online rooms with invite links. The game is compiled to WebAssembly with pygbag and runs in the browser, with a small WebSocket server rolling the dice for online matches.</p>
+          <div class="tag-row small">
+            <span class="tag">Python</span>
+            <span class="tag">Pygame</span>
+            <span class="tag">WebAssembly (pygbag)</span>
+            <span class="tag">WebSockets (aiohttp)</span>
+            <span class="tag">GitHub Pages</span>
+          </div>
+          <details class="project-details">
+            <summary>View Project Details →</summary>
+            <p>
+              The spiral is generated procedurally: an Archimedean spiral is sampled and the cells are
+              placed at equal arc-length intervals, so tiles never overlap and the core sits exactly at
+              the centre. Each game scatters 6 boost and 6 trap cells from a random seed, and landing on
+              one can chain into another, with each cell triggering at most once per turn to avoid
+              loops. Rendering is lightweight (rounded tiles, procedural particles, confetti, a
+              pre-rendered background) and the game loop is asynchronous so it works under WebAssembly.
+            </p>
+            <p>
+              For online play, a relay server (aiohttp, hosted on Render) manages rooms identified by a
+              4-letter code. The server rolls every dice value and sends the same random seed to all
+              players, so everyone sees the same board and nobody can choose their own roll. Limitations:
+              the server is a relay and does not validate movement, there is no reconnect after a
+              dropped connection, and the free hosting tier sleeps when idle, so the first connection can
+              take up to a minute.
+            </p>
+          </details>
+          <div class="project-links">
+            <a class="btn btn-primary btn-sm" href="https://github.com/easirht/spiral-race" target="_blank" rel="noopener">View on GitHub</a>
+            <a class="btn btn-outline btn-sm" href="https://easirht.github.io/spiral-race/" target="_blank" rel="noopener">Play Live Demo</a>
+            <a class="btn btn-outline btn-sm" href="https://github.com/easirht/spiral-server" target="_blank" rel="noopener">Server Code</a>
           </div>
         </article>
 
