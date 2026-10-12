@@ -230,6 +230,63 @@
         </article>
 
         <article class="project-card project-card-wide">
+          <div class="carousel carousel-results" data-carousel>
+            <div class="carousel-track">
+              <img src="assets/img/scin-pilot/results_v2_balanced_accuracy.png" alt="Balanced accuracy with 95% intervals for twelve models on the SCIN eight-class task; a dashed line marks chance at 0.125" loading="lazy">
+              <img src="assets/img/scin-pilot/macro_auc_v2.png" alt="Macro one-vs-rest ROC-AUC with 95% intervals for seven image and metadata models; a dashed line marks chance at 0.5" loading="lazy">
+              <img src="assets/img/scin-pilot/reliability_v2.png" alt="Reliability diagrams for seven models: accuracy within confidence bins against mean predicted probability" loading="lazy">
+            </div>
+            <button class="carousel-arrow prev" aria-label="Previous figure">‹</button>
+            <button class="carousel-arrow next" aria-label="Next figure">›</button>
+            <div class="carousel-dots"></div>
+          </div>
+          <p class="card-eyebrow">Personal Project — Medical Image Classification &amp; Evaluation</p>
+          <h3>Skin-Condition Classification on SCIN: A Protocol-Logged Pilot</h3>
+          <p>Evaluated image classifiers on 1,172 dermatologist-labelled cases (8 conditions) from the SCIN dermatology dataset, with duplicate-aware splits, metadata-only controls, calibration and ranking metrics. The original facial-skin plan did not survive the data: a blind review of 267 head/neck images found only 9 that clearly show a face, and the head/neck-only study (114 cases) was a null result. On the wider set, a fine-tuned MobileNetV3-Small reached balanced accuracy 0.301 (95% CI 0.272&ndash;0.333; chance 0.125), but it was not clearly better than a model that sees only contributor-reported metadata, and fine-tuning was not shown to beat frozen features.</p>
+          <div class="tag-row small">
+            <span class="tag">PyTorch</span>
+            <span class="tag">scikit-learn</span>
+            <span class="tag">Group-Aware Splits</span>
+            <span class="tag">Calibration</span>
+            <span class="tag">Bootstrap CIs</span>
+          </div>
+          <details class="project-details">
+            <summary>View Project Details →</summary>
+            <p>
+              The study began as facial skin-condition classification. SCIN has only a coarse head-or-neck
+              tag, and my blind review of 267 images found 9 clear faces, 83 partial, 125 none and 50
+              unclear, so the scope moved. The wider version uses cases with a unique top dermatologist
+              label (30.2% of labelled cases were excluded for ties), classes with at least 50 cases
+              (1,172 cases in total), 5-fold splits grouped by cases that share an identical image, and
+              pooled out-of-fold metrics with bootstrap intervals over those groups.
+            </p>
+            <p>
+              The controls changed the conclusion. Metadata-only models (body part, symptoms, texture, age,
+              sex) reached balanced accuracy 0.207 (0.253 class-weighted), and frozen ImageNet features
+              reached 0.209&ndash;0.218. The fine-tuned model used a class-weighted loss; re-running the
+              baselines with the same weighting closed most of the gap (class-weighted frozen models
+              0.273&ndash;0.282), so fine-tuning was not shown to beat weight-matched frozen features.
+              Unweighted frozen models were overconfident (expected calibration error up to 0.34).
+              Dermatologist-estimated Fitzpatrick types 5&ndash;6 are 73 of 1,105 cases, so the data cannot
+              support any statement about darker skin tones.
+            </p>
+            <p>
+              Limitations: one annotator, with poor measured agreement on re-shown images (kappa &minus;0.11,
+              n = 12); the written protocol log was started after some of the second-version runs and says
+              so; several analyses (class-weight control, subgroups, calibration, AUC) were added after the
+              main results; labels are dermatologist estimates from photographs, not biopsies. I do not
+              publish SCIN images or model weights, because of contributor privacy and unresolved terms for
+              the pretrained weights, so the results page is static and has no model to try.
+            </p>
+          </details>
+          <div class="project-links">
+            <a class="btn btn-primary btn-sm" href="https://github.com/easirht/scin-skin-condition-pilot" target="_blank" rel="noopener">View on GitHub</a>
+            <a class="btn btn-outline btn-sm" href="https://easirht.github.io/scin-skin-condition-pilot/" target="_blank" rel="noopener">Results Page</a>
+            <a class="btn btn-outline btn-sm" href="https://github.com/easirht/scin-skin-condition-pilot/blob/main/MODEL_CARD.md" target="_blank" rel="noopener">Model Card</a>
+          </div>
+        </article>
+
+        <article class="project-card project-card-wide">
           <div class="project-media"><img src="assets/img/spiral-race/board.png" alt="Spiral Race gameplay: 50-cell spiral board with four player tokens, boost and trap cells, and the glowing core" loading="lazy"></div>
           <p class="card-eyebrow">Personal Project — Game Development &amp; Web Deployment</p>
           <h3>Spiral Race: Multiplayer Spiral Board Game</h3>
