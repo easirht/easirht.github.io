@@ -1,16 +1,23 @@
 /* ==========================================================================
-   TOKENS — extracted from profile photo
+   TOKENS — "Campus Fresh" theme, same palette as the Meet Azmi booking site
+   To change the look later, edit the colours in this block first.
    ========================================================================== */
 :root {
-  --paper: #020403;
-  --paper-alt: #141413;
-  --card: #1A2324;
-  --ink: #ECEAE6;
-  --ink-soft: #ABA9A4;
-  --muted: #6E6B66;
-  --accent: #8B4A2B;
-  --accent-deep: #5F2E1B;
-  --line: rgba(255, 255, 255, 0.12);
+  --paper: #F6F7FD;
+  --paper-alt: #EEF0FF;
+  --card: #FFFFFF;
+  --ink: #1F2347;
+  --ink-soft: #4B5173;
+  --muted: #666B8C;
+  --accent: #4F46E5;
+  --accent-deep: #3730A3;
+  --line: #E3E6F6;
+
+  --pink: #EC4899;
+  --amber: #F59E0B;
+  --teal: #0D9488;
+  --grad: linear-gradient(135deg, #4F46E5 0%, #7C3AED 50%, #DB2777 100%);
+  --shadow: 0 10px 30px rgba(79, 70, 229, 0.12);
 
   --font-serif: 'Newsreader', serif;
   --font-sans: 'Inter', sans-serif;
@@ -24,6 +31,7 @@ html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { animation: none !important; transition: none !important; }
+  .hero::before, .hero::after { animation: none !important; }
 }
 
 body {
@@ -53,7 +61,7 @@ img { max-width: 100%; display: block; }
    ========================================================================== */
 .site-header {
   position: sticky; top: 0; z-index: 50;
-  background: rgba(2, 4, 3, 0.92);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(6px);
   border-bottom: 1px solid var(--line);
 }
@@ -64,7 +72,8 @@ img { max-width: 100%; display: block; }
 .main-nav { display: flex; gap: 26px; }
 .main-nav a { font-size: 14px; color: var(--ink-soft); }
 .main-nav a:hover { color: var(--accent); text-decoration: none; }
-.nav-cta { color: var(--accent) !important; font-weight: 600; }
+.nav-cta { color: #FFFFFF !important; font-weight: 600; background: var(--grad); padding: 7px 16px; border-radius: 999px; }
+.nav-cta:hover { color: #FFFFFF !important; transform: translateY(-1px); }
 
 .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; }
 .nav-toggle span { width: 22px; height: 2px; background: var(--ink); display: block; }
@@ -72,7 +81,16 @@ img { max-width: 100%; display: block; }
 /* ==========================================================================
    HERO
    ========================================================================== */
-.hero { padding: 72px 0 88px; }
+.hero {
+  position: relative; overflow: hidden;
+  padding: 72px 0 88px; background: var(--grad); color: #FFFFFF;
+  border-radius: 0 0 36px 36px;
+}
+.hero::before, .hero::after { content: ""; position: absolute; border-radius: 50%; opacity: 0.25; pointer-events: none; animation: float 9s ease-in-out infinite; }
+.hero::before { width: 240px; height: 240px; background: var(--amber); right: -70px; top: -70px; }
+.hero::after { width: 160px; height: 160px; background: var(--teal); left: -50px; bottom: -50px; animation-delay: -3s; }
+.hero .wrap { position: relative; z-index: 1; }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
 .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: center; }
 
 .eyebrow {
@@ -104,18 +122,37 @@ img { max-width: 100%; display: block; }
   padding: 12px 24px; border-radius: 999px; display: inline-block; border: 2px solid transparent;
 }
 .btn:hover { text-decoration: none; }
-.btn-primary { background: var(--accent); color: #FFFFFF; }
-.btn-primary:hover { background: var(--ink); color: var(--paper); }
-.btn-outline { border-color: var(--ink-soft); color: var(--ink); }
-.btn-outline:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), #DB2777); color: #FFFFFF;
+  box-shadow: 0 8px 20px rgba(236, 72, 153, 0.28); transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(236, 72, 153, 0.35); }
+.btn-outline { border-color: var(--accent); color: var(--accent); transition: background 0.15s, color 0.15s; }
+.btn-outline:hover { background: var(--accent); color: #FFFFFF; border-color: var(--accent); }
 
 .hero-visual { position: relative; display: flex; align-items: center; justify-content: center; margin-top: -18px; }
 .portrait-frame {
   width: 280px; height: 340px; border-radius: 28px;
-  border: 2px solid var(--accent); padding: 6px; overflow: hidden;
-  background: var(--card);
+  border: 3px solid #FFFFFF; padding: 6px; overflow: hidden;
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 18px 40px rgba(31, 35, 71, 0.35);
 }
 .portrait-frame img { width: 100%; height: 100%; object-fit: cover; border-radius: 22px; }
+
+/* Hero text and buttons sit on the gradient, so they use light colours here */
+.hero .eyebrow,
+.hero .hero-greeting,
+.hero .hero-copy h1,
+.hero .hero-tagline,
+.hero .hero-location,
+.hero .hero-research-line,
+.hero .hero-pitch { color: #FFFFFF; }
+.hero .stat-row { border-top-color: rgba(255, 255, 255, 0.28); }
+.hero .stat { background: rgba(31, 35, 71, 0.28); border: 1px solid rgba(255, 255, 255, 0.28); }
+.hero .btn-primary { background: #FFFFFF; color: var(--accent); box-shadow: 0 8px 20px rgba(31, 35, 71, 0.25); }
+.hero .btn-primary:hover { background: #FFE9F3; color: var(--accent-deep); }
+.hero .btn-outline { border-color: rgba(255, 255, 255, 0.75); color: #FFFFFF; }
+.hero .btn-outline:hover { background: #FFFFFF; color: var(--accent); border-color: #FFFFFF; }
 
 /* ==========================================================================
    SECTIONS
@@ -262,11 +299,11 @@ img { max-width: 100%; display: block; }
 .contact-pills { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0 20px; }
 .pill-link {
   font-family: var(--font-sans); font-weight: 600; font-size: 14px;
-  padding: 11px 22px; border-radius: 999px; border: 2px solid var(--ink-soft);
-  color: var(--ink);
+  padding: 11px 22px; border-radius: 999px; border: 2px solid var(--accent);
+  color: var(--accent);
 }
-.pill-link:hover { text-decoration: none; background: var(--ink); color: var(--paper); border-color: var(--ink); }
-.pill-primary { background: var(--accent); border-color: var(--accent); color: #FFFFFF; }
+.pill-link:hover { text-decoration: none; background: var(--accent); color: #FFFFFF; border-color: var(--accent); }
+.pill-primary { background: linear-gradient(135deg, var(--accent), #DB2777); border-color: transparent; color: #FFFFFF; }
 .pill-primary:hover { background: var(--accent-deep); border-color: var(--accent-deep); color: #FFFFFF; }
 .contact-detail { font-family: var(--font-mono); font-size: 13px; color: var(--muted); }
 
@@ -310,13 +347,6 @@ img { max-width: 100%; display: block; }
 .carousel-dots button.active { background: var(--accent); }
 
 .carousel-sm { aspect-ratio: 16/9; margin-top: 16px; max-width: 480px; }
-
-/* ---- Result-figure carousel + project link buttons (animal classifier card) ---- */
-.carousel.carousel-results { aspect-ratio: 16/9; background: #fff; max-width: 900px; margin: 0 auto 18px; border: 1px solid var(--line); }
-.carousel.carousel-results .carousel-track img { object-fit: contain; background: #fff; }
-.project-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
-.btn.btn-sm { padding: 8px 18px; font-size: 13.5px; }
-
 
 /* ==========================================================================
    PAGE HERO (sub-page banner)
@@ -383,6 +413,19 @@ img { max-width: 100%; display: block; }
 .main-nav a.is-current { color: var(--accent); }
 
 /* ==========================================================================
+   THEME LAYER — soft shadows, tinted chips, gradient underline.
+   Delete this block to get a flatter look.
+   ========================================================================== */
+::selection { background: #C7D2FE; color: var(--ink); }
+h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius: 4px; background: var(--grad); margin-top: 10px; }
+.fact, .cert-row, .explore-card, .sim-card, .sim-feature { box-shadow: var(--shadow); }
+.explore-card { transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s; }
+.explore-card:hover { transform: translateY(-4px); }
+.tag, .chip, .pub-status { background: var(--paper-alt); border-color: transparent; color: var(--accent-deep); }
+.research-quote { border-left-color: var(--pink); }
+.site-footer { background: var(--card); }
+
+/* ==========================================================================
    RESPONSIVE
    ========================================================================== */
 @media (max-width: 860px) {
@@ -401,7 +444,7 @@ img { max-width: 100%; display: block; }
   .stat-row { grid-template-columns: repeat(2, 1fr); }
 
   .main-nav {
-    position: fixed; top: 68px; left: 0; right: 0; background: var(--paper);
+    position: fixed; top: 68px; left: 0; right: 0; background: var(--card);
     border-bottom: 1px solid var(--line); flex-direction: column; align-items: flex-start;
     padding: 16px 24px 24px; gap: 14px; transform: translateY(-130%); transition: transform 0.25s ease;
   }
