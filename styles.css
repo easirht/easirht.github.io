@@ -524,3 +524,18 @@ h2.reveal.in::after { width: 48px; }
 .fact:hover, .sim-card:hover, .cert-row:hover { transform: translateY(-4px); border-color: var(--accent); }
 .project-card:hover .project-media { transform: translateY(-4px); box-shadow: var(--shadow); }
 .chip:hover, .tag:hover { transform: translateY(-2px); }
+
+/* ==========================================================================
+   JUSTIFIED TEXT — long paragraphs only (needs <html lang="en"> for hyphens)
+   Justify is desktop-only; on phones the lines are too short and it looks gappy.
+   ========================================================================== */
+.about-copy, .pub-desc, .timeline-body p, .internship-narrative, .project-details p {
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+@media (min-width: 861px) {
+  .about-copy, .pub-desc, .timeline-body p, .internship-narrative, .project-details p {
+    text-align: justify;
+    text-justify: inter-word;
+  }
+}
