@@ -1,24 +1,36 @@
 /* ==========================================================================
-   TOKENS — "Campus Fresh" theme, same palette as the Meet Azmi booking site
+   TOKENS — "Midnight & Gold" theme, deep navy + champagne gold on warm ivory
    To change the look later, edit the colours in this block first.
    ========================================================================== */
 :root {
-  --paper: #F6F7FD;
-  --paper-alt: #EEF0FF;
+  --paper: #FAF8F3;
+  --paper-alt: #F0ECE1;
   --card: #FFFFFF;
-  --ink: #1F2347;
-  --ink-soft: #4B5173;
-  --muted: #666B8C;
-  --accent: #4F46E5;
-  --accent-deep: #3730A3;
-  --line: #E3E6F6;
+  --ink: #0F1A33;
+  --ink-soft: #3C4560;
+  --muted: #5C627A;        /* darker than before so small grey text stays readable */
+  --accent: #1B3566;
+  --accent-deep: #0F1A33;
+  --line: #E6E0D1;
 
-  --pink: #EC4899;
-  --amber: #F59E0B;
-  --teal: #0D9488;
-  --grad: linear-gradient(135deg, #4F46E5 0%, #7C3AED 50%, #DB2777 100%);
-  --shadow: 0 10px 30px rgba(79, 70, 229, 0.12);
-  --btn-glow: rgba(79, 70, 229, 0.30);
+  --pink: #C9A227;          /* gold highlight (kept name so existing rules work) */
+  --amber: #D4AF37;
+  --teal: #5B7FD1;
+  --gold-soft: #E7CF7A;     /* gold used for text on dark backgrounds */
+
+  /* Deep hero: navy base + soft gold glow (top-right) + blue glow (bottom-left) */
+  --grad:
+    radial-gradient(70% 80% at 92% 0%, rgba(201, 162, 39, 0.28) 0%, transparent 60%),
+    radial-gradient(80% 80% at 0% 100%, rgba(59, 99, 190, 0.38) 0%, transparent 60%),
+    linear-gradient(145deg, #080F20 0%, #10204A 50%, #1A3570 100%);
+  --grad-btn: linear-gradient(135deg, #1B3566, #0F1A33);
+  --gold-btn: linear-gradient(135deg, #EBD58A, #C9A227);
+  --gold-line: linear-gradient(90deg, #C9A227, #E7CF7A);
+  --shadow: 0 10px 30px rgba(15, 26, 51, 0.12);
+  --btn-glow: rgba(15, 26, 51, 0.3);
+  --hero-hover: #F6EBC8;
+  --stat-bg: rgba(255, 255, 255, 0.07);
+  --sel: #E9DDB0;
 
   --font-serif: 'Newsreader', serif;
   --font-sans: 'Inter', sans-serif;
@@ -31,7 +43,8 @@
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  *, *::before, *::after { animation: none !important; transition: none !important; }
+  * { animation: none !important; transition: none !important; }
+  .hero::before, .hero::after { animation: none !important; }
 }
 
 body {
@@ -72,7 +85,7 @@ img { max-width: 100%; display: block; }
 .main-nav { display: flex; gap: 26px; }
 .main-nav a { font-size: 14px; color: var(--ink-soft); }
 .main-nav a:hover { color: var(--accent); text-decoration: none; }
-.nav-cta { color: #FFFFFF !important; font-weight: 600; background: var(--grad); padding: 7px 16px; border-radius: 999px; }
+.nav-cta { color: #FFFFFF !important; font-weight: 600; background: var(--grad-btn); padding: 7px 16px; border-radius: 999px; }
 .nav-cta:hover { color: #FFFFFF !important; transform: translateY(-1px); }
 
 .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; }
@@ -123,10 +136,10 @@ img { max-width: 100%; display: block; }
 }
 .btn:hover { text-decoration: none; }
 .btn-primary {
-  background: linear-gradient(135deg, var(--accent), #DB2777); color: #FFFFFF;
-  box-shadow: 0 8px 20px rgba(236, 72, 153, 0.28); transition: transform 0.15s, box-shadow 0.15s;
+  background: var(--grad-btn); color: #FFFFFF;
+  box-shadow: 0 8px 20px var(--btn-glow); transition: transform 0.15s, box-shadow 0.15s;
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(236, 72, 153, 0.35); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 26px var(--btn-glow); }
 .btn-outline { border-color: var(--accent); color: var(--accent); transition: background 0.15s, color 0.15s; }
 .btn-outline:hover { background: var(--accent); color: #FFFFFF; border-color: var(--accent); }
 
@@ -135,22 +148,22 @@ img { max-width: 100%; display: block; }
   width: 280px; height: 340px; border-radius: 28px;
   border: 3px solid #FFFFFF; padding: 6px; overflow: hidden;
   background: rgba(255, 255, 255, 0.18);
-  box-shadow: 0 18px 40px rgba(31, 35, 71, 0.35);
+  box-shadow: 0 18px 40px rgba(8, 15, 32, 0.4);
 }
 .portrait-frame img { width: 100%; height: 100%; object-fit: cover; border-radius: 22px; }
 
 /* Hero text and buttons sit on the gradient, so they use light colours here */
-.hero .eyebrow,
-.hero .hero-greeting,
+.hero .eyebrow { color: var(--gold-soft); }
+.hero .hero-greeting { color: rgba(255, 255, 255, 0.92); }
 .hero .hero-copy h1,
-.hero .hero-tagline,
+.hero .hero-tagline { color: #FFFFFF; }
 .hero .hero-location,
-.hero .hero-research-line,
-.hero .hero-pitch { color: #FFFFFF; }
+.hero .hero-research-line { color: rgba(255, 255, 255, 0.78); }
+.hero .hero-pitch { color: rgba(255, 255, 255, 0.9); }
 .hero .stat-row { border-top-color: rgba(255, 255, 255, 0.28); }
-.hero .stat { background: rgba(31, 35, 71, 0.28); border: 1px solid rgba(255, 255, 255, 0.28); }
-.hero .btn-primary { background: #FFFFFF; color: var(--accent); box-shadow: 0 8px 20px rgba(31, 35, 71, 0.25); }
-.hero .btn-primary:hover { background: #FFE9F3; color: var(--accent-deep); }
+.hero .stat { background: var(--stat-bg); border: 1px solid rgba(255, 255, 255, 0.22); backdrop-filter: blur(4px); }
+.hero .btn-primary { background: var(--gold-btn); color: var(--accent-deep); box-shadow: 0 8px 20px rgba(8, 15, 32, 0.3); }
+.hero .btn-primary:hover { background: var(--hero-hover); color: var(--accent-deep); }
 .hero .btn-outline { border-color: rgba(255, 255, 255, 0.75); color: #FFFFFF; }
 .hero .btn-outline:hover { background: #FFFFFF; color: var(--accent); border-color: #FFFFFF; }
 
@@ -303,7 +316,7 @@ img { max-width: 100%; display: block; }
   color: var(--accent);
 }
 .pill-link:hover { text-decoration: none; background: var(--accent); color: #FFFFFF; border-color: var(--accent); }
-.pill-primary { background: linear-gradient(135deg, var(--accent), #DB2777); border-color: transparent; color: #FFFFFF; }
+.pill-primary { background: var(--grad-btn); border-color: transparent; color: #FFFFFF; }
 .pill-primary:hover { background: var(--accent-deep); border-color: var(--accent-deep); color: #FFFFFF; }
 .contact-detail { font-family: var(--font-mono); font-size: 13px; color: var(--muted); }
 
@@ -416,8 +429,8 @@ img { max-width: 100%; display: block; }
    THEME LAYER — soft shadows, tinted chips, gradient underline.
    Delete this block to get a flatter look.
    ========================================================================== */
-::selection { background: #C7D2FE; color: var(--ink); }
-h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius: 4px; background: var(--grad); margin-top: 10px; }
+::selection { background: var(--sel); color: var(--ink); }
+h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius: 4px; background: var(--gold-line); margin-top: 10px; }
 .fact, .cert-row, .explore-card, .sim-card, .sim-feature { box-shadow: var(--shadow); }
 .explore-card { transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s; }
 .explore-card:hover { transform: translateY(-4px); }
@@ -458,17 +471,9 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius
 }
 
 
-/* Layout fix: a grid item will not shrink below its content by default, so the
-   photo carousels were making project cards wider than a phone screen.
-   min-width: 0 lets the cards shrink to the screen. */
-.project-card, .sim-feature, .carousel { min-width: 0; }
-
-
 /* ==========================================================================
-   ANIMATIONS — pairs with the animation code at the bottom of script.js
-   (scroll reveal, stat count-up, scroll progress bar, header shadow).
-   All of it switches off for visitors who ask their device for less motion.
-   To remove the animations completely, delete this block.
+   ANIMATIONS — pairs with animations.js (scroll reveal + stat count-up).
+   Everything here switches off automatically for "reduce motion" users.
    ========================================================================== */
 @keyframes drift { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
 @keyframes rise  { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
@@ -477,7 +482,8 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius
 @keyframes ping  { 0% { box-shadow: 0 0 0 0 var(--btn-glow); } 70%, 100% { box-shadow: 0 0 0 11px transparent; } }
 @keyframes shine { from { transform: translateX(-130%) skewX(-20deg); } to { transform: translateX(230%) skewX(-20deg); } }
 
-/* Hero: staggered text entrance, popping and floating portrait */
+/* Hero: slowly drifting glow, staggered text entrance, floating portrait */
+.hero { background-size: 170% 170%; animation: drift 22s ease-in-out infinite alternate; }
 .hero-copy > * { animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
 .hero-copy > :nth-child(1) { animation-delay: 0.05s; }
 .hero-copy > :nth-child(2) { animation-delay: 0.15s; }
@@ -487,14 +493,8 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius
 .hero-copy > :nth-child(6) { animation-delay: 0.55s; }
 .hero-copy > :nth-child(7) { animation-delay: 0.65s; }
 .hero-copy > :nth-child(8) { animation-delay: 0.8s; }
-.hero-copy > :nth-child(n+9) { animation-delay: 0.95s; }
 .hero-visual { animation: pop 1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.3s both; }
 .portrait-frame { animation: bob 7s ease-in-out 1.4s infinite; }
-
-/* Slowly drifting gradient. Desktop only, so phones do not repaint it all day. */
-@media (min-width: 861px) {
-  .hero { background-size: 170% 170%; animation: drift 22s ease-in-out infinite alternate; }
-}
 
 /* Timeline dots pulse */
 .timeline li::before { animation: ping 2.6s ease-out infinite; }
@@ -509,33 +509,25 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius
 .btn-primary:hover::after, .pill-primary:hover::after, .nav-cta:hover::after { animation: shine 0.8s ease; }
 .pill-link:hover { transform: translateY(-2px); }
 
-/* Header shadow once the page scrolls (class added by script.js) */
+/* Header shadow once the page scrolls (class added by animations.js) */
 .site-header { transition: box-shadow 0.3s; }
-.site-header.scrolled { box-shadow: 0 8px 24px rgba(79, 70, 229, 0.10); }
+.site-header.scrolled { box-shadow: 0 8px 24px rgba(15, 26, 51, 0.1); }
 
-/* Thin progress line at the very top (element added by script.js) */
-.scroll-progress {
-  position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 60;
-  background: var(--grad); transform: scaleX(0); transform-origin: 0 50%; pointer-events: none;
-}
+/* Scroll reveal (class added by animations.js, removed again after it plays) */
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.reveal.in { opacity: 1; transform: none; }
+h2.reveal::after { width: 0; transition: width 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.35s; }
+h2.reveal.in::after { width: 48px; }
 
-/* Hover lifts. This block comes BEFORE .reveal so the reveal transition wins while it plays. */
+/* Hover lifts */
 .fact, .sim-card, .cert-row, .project-media, .chip, .tag { transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s, background 0.25s; }
 .fact:hover, .sim-card:hover, .cert-row:hover { transform: translateY(-4px); border-color: var(--accent); }
 .project-card:hover .project-media { transform: translateY(-4px); box-shadow: var(--shadow); }
 .chip:hover, .tag:hover { transform: translateY(-2px); }
 
-/* Scroll reveal (class added by script.js, removed again after it has played) */
-.reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1); }
-.reveal.in { opacity: 1; transform: none; }
-h2.reveal::after { width: 0; transition: width 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.35s; }
-h2.reveal.in::after { width: 48px; }
-@media print { .reveal { opacity: 1 !important; transform: none !important; } .scroll-progress { display: none; } }
-
 /* ==========================================================================
-   JUSTIFIED TEXT — long paragraphs only (needs <html lang="en"> for hyphens).
-   Desktop only; on phones the lines are too short and it looks gappy.
-   Delete this block if you prefer ragged-right text.
+   JUSTIFIED TEXT — long paragraphs only (needs <html lang="en"> for hyphens)
+   Justify is desktop-only; on phones the lines are too short and it looks gappy.
    ========================================================================== */
 .about-copy, .pub-desc, .timeline-body p, .internship-narrative, .project-details p {
   hyphens: auto;
