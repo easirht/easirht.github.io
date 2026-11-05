@@ -43,8 +43,7 @@
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  * { animation: none !important; transition: none !important; }
-  .hero::before, .hero::after { animation: none !important; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 
 body {
@@ -471,9 +470,17 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius
 }
 
 
+/* Layout fix: a grid item will not shrink below its content by default, so the
+   photo carousels were making project cards wider than a phone screen.
+   min-width: 0 lets the cards shrink to the screen. */
+.project-card, .sim-feature, .carousel { min-width: 0; }
+
+
 /* ==========================================================================
-   ANIMATIONS — pairs with animations.js (scroll reveal + stat count-up).
-   Everything here switches off automatically for "reduce motion" users.
+   ANIMATIONS — pairs with the animation code at the bottom of script.js
+   (scroll reveal, stat count-up, scroll progress line, header shadow).
+   All of it switches off for visitors who ask their device for less motion.
+   To remove the animations completely, delete this block.
    ========================================================================== */
 @keyframes drift { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
 @keyframes rise  { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
@@ -482,8 +489,7 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius
 @keyframes ping  { 0% { box-shadow: 0 0 0 0 var(--btn-glow); } 70%, 100% { box-shadow: 0 0 0 11px transparent; } }
 @keyframes shine { from { transform: translateX(-130%) skewX(-20deg); } to { transform: translateX(230%) skewX(-20deg); } }
 
-/* Hero: slowly drifting glow, staggered text entrance, floating portrait */
-.hero { background-size: 170% 170%; animation: drift 22s ease-in-out infinite alternate; }
+/* Hero: staggered text entrance, popping and floating portrait */
 .hero-copy > * { animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
 .hero-copy > :nth-child(1) { animation-delay: 0.05s; }
 .hero-copy > :nth-child(2) { animation-delay: 0.15s; }
@@ -493,8 +499,14 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius
 .hero-copy > :nth-child(6) { animation-delay: 0.55s; }
 .hero-copy > :nth-child(7) { animation-delay: 0.65s; }
 .hero-copy > :nth-child(8) { animation-delay: 0.8s; }
+.hero-copy > :nth-child(n+9) { animation-delay: 0.95s; }
 .hero-visual { animation: pop 1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.3s both; }
 .portrait-frame { animation: bob 7s ease-in-out 1.4s infinite; }
+
+/* Slowly drifting glow. Desktop only, so phones do not repaint it all day. */
+@media (min-width: 861px) {
+  .hero { background-size: 170% 170%; animation: drift 22s ease-in-out infinite alternate; }
+}
 
 /* Timeline dots pulse */
 .timeline li::before { animation: ping 2.6s ease-out infinite; }
@@ -509,21 +521,28 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius
 .btn-primary:hover::after, .pill-primary:hover::after, .nav-cta:hover::after { animation: shine 0.8s ease; }
 .pill-link:hover { transform: translateY(-2px); }
 
-/* Header shadow once the page scrolls (class added by animations.js) */
+/* Header shadow once the page scrolls (class added by script.js) */
 .site-header { transition: box-shadow 0.3s; }
 .site-header.scrolled { box-shadow: 0 8px 24px rgba(15, 26, 51, 0.1); }
 
-/* Scroll reveal (class added by animations.js, removed again after it plays) */
-.reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1); }
-.reveal.in { opacity: 1; transform: none; }
-h2.reveal::after { width: 0; transition: width 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.35s; }
-h2.reveal.in::after { width: 48px; }
+/* Thin gold progress line at the very top (element added by script.js) */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 60;
+  background: var(--gold-line); transform: scaleX(0); transform-origin: 0 50%; pointer-events: none;
+}
 
-/* Hover lifts */
+/* Hover lifts. This block comes BEFORE .reveal so the reveal transition wins while it plays. */
 .fact, .sim-card, .cert-row, .project-media, .chip, .tag { transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s, background 0.25s; }
 .fact:hover, .sim-card:hover, .cert-row:hover { transform: translateY(-4px); border-color: var(--accent); }
 .project-card:hover .project-media { transform: translateY(-4px); box-shadow: var(--shadow); }
 .chip:hover, .tag:hover { transform: translateY(-2px); }
+
+/* Scroll reveal (class added by script.js, removed again after it has played) */
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.reveal.in { opacity: 1; transform: none; }
+h2.reveal::after { width: 0; transition: width 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.35s; }
+h2.reveal.in::after { width: 48px; }
+@media print { .reveal { opacity: 1 !important; transform: none !important; } .scroll-progress { display: none; } }
 
 /* ==========================================================================
    JUSTIFIED TEXT — long paragraphs only (needs <html lang="en"> for hyphens)
@@ -539,3 +558,289 @@ h2.reveal.in::after { width: 48px; }
     text-justify: inter-word;
   }
 }
+
+
+/* ==========================================================================
+   DARK GLASS APP SHELL  (Sorvo-style dashboard look)
+   - Dark frosted-glass is the default. html[data-theme="light"] switches to the light
+     Midnight & Gold look. The toggle button is added by script.js and remembered.
+   - 1200px and wider: the header becomes a floating sidebar, plus a glass top bar.
+   - Under 1200px: normal top bar with a hamburger menu.
+   - PAGE PHOTO: to put a photo behind the glass, set --bg-image below, for example
+       --bg-image: linear-gradient(rgba(7,12,26,0.72), rgba(7,12,26,0.86)), url("assets/img/bg.jpg") center / cover;
+     and set --glass-blur: blur(16px) saturate(140%); so the panels frost the photo.
+   To go back to the old look, replace BOTH styles.css and script.js with the previous versions
+   (deleting only this block would leave the theme button and top bar unstyled).
+   ========================================================================== */
+:root {
+  color-scheme: dark;
+  --paper: #070C1A;
+  --paper-alt: rgba(255, 255, 255, 0.05);
+  --card: rgba(255, 255, 255, 0.06);
+  --ink: #EEF1F8;
+  --ink-soft: #BDC5DA;
+  --muted: #AEB8D0;
+  --accent: #E7CF7A;
+  --accent-deep: #F3E7BE;
+  --line: rgba(255, 255, 255, 0.12);
+  --shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  --card-shadow: none;
+  --btn-glow: rgba(201, 162, 39, 0.3);
+  --sel: rgba(201, 162, 39, 0.4);
+
+  --btn-bg: var(--gold-btn);
+  --btn-text: #0F1A33;
+  --pill-hover-bg: #F6EBC8;
+  --nav-active-bg: var(--gold-btn);
+  --nav-active-text: #0F1A33;
+
+  --glass: rgba(255, 255, 255, 0.045);
+  --glass-border: rgba(255, 255, 255, 0.11);
+  --header-bg: rgba(10, 17, 36, 0.76);
+  --menu-bg: #0B1326;
+  --hover-bg: rgba(255, 255, 255, 0.07);
+  --bar-blur: blur(18px) saturate(150%);
+  --glass-blur: none;
+  --bg-image: none;
+  --shell-max: 1180px;
+}
+html[data-theme="light"] {
+  color-scheme: light;
+  --paper: #FAF8F3;
+  --paper-alt: #F0ECE1;
+  --card: #FFFFFF;
+  --ink: #0F1A33;
+  --ink-soft: #3C4560;
+  --muted: #5C627A;
+  --accent: #1B3566;
+  --accent-deep: #0F1A33;
+  --line: #E6E0D1;
+  --shadow: 0 10px 30px rgba(15, 26, 51, 0.12);
+  --card-shadow: 0 10px 30px rgba(15, 26, 51, 0.12);
+  --btn-glow: rgba(15, 26, 51, 0.3);
+  --sel: #E9DDB0;
+
+  --btn-bg: var(--grad-btn);
+  --btn-text: #FFFFFF;
+  --pill-hover-bg: #0F1A33;
+  --nav-active-bg: var(--grad-btn);
+  --nav-active-text: #FFFFFF;
+
+  --glass: rgba(255, 255, 255, 0.72);
+  --glass-border: #E6E0D1;
+  --header-bg: rgba(255, 255, 255, 0.88);
+  --menu-bg: #FFFFFF;
+  --hover-bg: rgba(15, 26, 51, 0.06);
+  --bar-blur: blur(14px) saturate(140%);
+}
+
+/* Page background: a fixed layer, so glass panels have something to sit on */
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    var(--bg-image),
+    radial-gradient(60% 50% at 88% 6%, rgba(201, 162, 39, 0.20), transparent 70%),
+    radial-gradient(55% 55% at 6% 94%, rgba(59, 99, 190, 0.30), transparent 70%),
+    linear-gradient(160deg, #070C1A 0%, #0B1530 55%, #0C1B3F 100%);
+}
+html[data-theme="light"] body::before {
+  background:
+    radial-gradient(60% 50% at 90% 0%, rgba(201, 162, 39, 0.18), transparent 70%),
+    radial-gradient(50% 50% at 0% 100%, rgba(59, 99, 190, 0.12), transparent 70%),
+    #FAF8F3;
+}
+
+/* Header (the top bar on phones and tablets) */
+.site-header {
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--glass-border);
+  -webkit-backdrop-filter: var(--bar-blur); backdrop-filter: var(--bar-blur);
+}
+
+/* Buttons: gold on dark, navy on light */
+.btn-primary, .pill-primary { background: var(--btn-bg); color: var(--btn-text); }
+.pill-primary:hover { background: var(--pill-hover-bg); color: var(--btn-text); border-color: transparent; }
+.btn-outline:hover, .pill-link:hover { color: var(--btn-text); }
+.nav-cta, .nav-cta:hover { background: var(--btn-bg); color: var(--btn-text) !important; }
+.hero .btn-primary, .hero .btn-primary:hover { color: #0F1A33; }
+.hero .btn-outline:hover { color: #0F1A33; }
+.carousel-arrow { color: #0F1A33; }
+
+/* Panels */
+.fact, .cert-row, .explore-card, .sim-card, .sim-feature { box-shadow: var(--card-shadow); }
+.site-footer { background: transparent; border-top: none; padding: 18px 20px 34px; text-align: center; }
+
+.section { padding: 10px 20px; }
+.section.alt { background: transparent; }
+.section > .wrap {
+  max-width: var(--shell-max);
+  background: var(--glass); border: 1px solid var(--glass-border); border-radius: 28px;
+  padding: 40px 44px; box-shadow: var(--shadow);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+}
+
+/* Hero becomes a card */
+.hero {
+  width: calc(100% - 40px); max-width: var(--shell-max); margin: 8px auto 10px;
+  padding: 60px 0 68px; border-radius: 32px; border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow);
+}
+.hero .wrap { max-width: none; padding: 0 clamp(24px, 4vw, 52px); }
+
+/* Sub-page heading: plain text on the background, like a dashboard greeting */
+.page-hero { padding: 22px 20px 8px; }
+.page-hero > .wrap { max-width: var(--shell-max); padding: 0 6px; }
+
+/* Top bar (added by script.js, desktop only) */
+.topbar { display: none; }
+
+/* Theme toggle (added by script.js) */
+.theme-toggle {
+  display: inline-flex; align-items: center; gap: 12px; cursor: pointer;
+  border: 1px solid var(--glass-border); background: var(--hover-bg); color: var(--ink-soft);
+  font: 500 13.5px var(--font-sans);
+}
+.theme-toggle:hover { color: var(--ink); }
+.theme-toggle .ti {
+  width: 18px; height: 18px; flex: none; background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A//www.w3.org/2000/svg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'2'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Ccircle%20cx%3D'12'%20cy%3D'12'%20r%3D'5'/%3E%3Cpath%20d%3D'M12%201v2M12%2021v2M4.22%204.22l1.42%201.42M18.36%2018.36l1.42%201.42M1%2012h2M21%2012h2M4.22%2019.78l1.42-1.42M18.36%205.64l1.42-1.42'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A//www.w3.org/2000/svg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'2'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Ccircle%20cx%3D'12'%20cy%3D'12'%20r%3D'5'/%3E%3Cpath%20d%3D'M12%201v2M12%2021v2M4.22%204.22l1.42%201.42M18.36%2018.36l1.42%201.42M1%2012h2M21%2012h2M4.22%2019.78l1.42-1.42M18.36%205.64l1.42-1.42'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+html[data-theme="light"] .theme-toggle .ti {
+  -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A//www.w3.org/2000/svg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'2'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Cpath%20d%3D'M21%2012.79A9%209%200%201%201%2011.21%203%207%207%200%200%200%2021%2012.79z'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A//www.w3.org/2000/svg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'2'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Cpath%20d%3D'M21%2012.79A9%209%200%201%201%2011.21%203%207%207%200%200%200%2021%2012.79z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* ---- Under 1200px: top bar with hamburger ---- */
+@media (max-width: 1199px) {
+  .main-nav {
+    position: fixed; top: 68px; left: 0; right: 0; background: var(--menu-bg);
+    border-bottom: 1px solid var(--glass-border); flex-direction: column; align-items: flex-start;
+    padding: 16px 24px 24px; gap: 14px; transform: translateY(-130%); transition: transform 0.25s ease;
+    max-height: calc(100vh - 68px); overflow-y: auto;
+  }
+  .main-nav.is-open { transform: translateY(0); }
+  .nav-toggle { display: flex; }
+  .theme-toggle { margin-left: auto; width: 40px; height: 40px; justify-content: center; padding: 0; border-radius: 12px; }
+  .theme-toggle .tl { display: none; }
+  .nav-toggle { margin-left: 6px; }
+}
+
+/* ---- 1200px and wider: floating sidebar layout ---- */
+@media (min-width: 1200px) {
+  main, .site-footer { margin-left: 264px; }
+
+  .site-header {
+    position: fixed; top: 16px; left: 16px; bottom: 16px; width: 248px;
+    display: flex; flex-direction: column; padding: 18px 12px 14px; overflow-y: auto;
+    border: 1px solid var(--glass-border); border-radius: 28px; box-shadow: var(--shadow);
+  }
+  .site-header.scrolled { box-shadow: var(--shadow); }
+  .header-inner {
+    flex: 1; height: auto; max-width: none; margin: 0; padding: 0;
+    flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 14px;
+  }
+
+  /* Brand block: initials tile, name, one-line subtitle */
+  .wordmark {
+    display: grid; grid-template-columns: 42px 1fr; column-gap: 12px; align-items: center;
+    padding: 4px 6px; font-size: 18px; line-height: 1.25;
+  }
+  .wordmark::before {
+    content: "ER"; grid-column: 1; grid-row: 1 / span 2; width: 42px; height: 42px; border-radius: 13px;
+    display: grid; place-items: center; background: var(--gold-btn); color: #0F1A33;
+    font-family: var(--font-sans); font-style: normal; font-weight: 700; font-size: 15px;
+  }
+  .wordmark::after {
+    content: "Prospective PhD applicant"; grid-column: 2;
+    font-family: var(--font-sans); font-style: normal; font-weight: 400; font-size: 12px; color: var(--muted);
+  }
+
+  .main-nav { flex: 1; flex-direction: column; align-items: stretch; gap: 3px; }
+  .main-nav a {
+    position: relative; display: flex; align-items: center; gap: 12px;
+    padding: 11px 14px; border-radius: 14px; font-size: 14.5px; color: var(--ink-soft);
+    transition: background 0.2s, color 0.2s;
+  }
+  .main-nav a::before {
+    content: ""; width: 18px; height: 18px; flex: none; background: currentColor;
+    -webkit-mask: var(--ico) center / contain no-repeat; mask: var(--ico) center / contain no-repeat;
+  }
+  .main-nav a:hover { background: var(--hover-bg); color: var(--ink); }
+  .main-nav a.is-current, .main-nav a.is-current:hover {
+    background: var(--nav-active-bg); color: var(--nav-active-text); font-weight: 600;
+  }
+
+  /* Small group headings, created with CSS only */
+  .main-nav a[href="index.html"], .main-nav a[href="research.html"], .main-nav a[href="activities.html"] { margin-top: 28px; }
+  .main-nav a[href="index.html"]::after, .main-nav a[href="research.html"]::after, .main-nav a[href="activities.html"]::after {
+    position: absolute; left: 14px; top: -21px;
+    font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+  }
+  .main-nav a[href="index.html"]::after { content: "Profile"; }
+  .main-nav a[href="research.html"]::after { content: "Work"; }
+  .main-nav a[href="activities.html"]::after { content: "Record"; }
+
+  .main-nav a[href="index.html"] { --ico: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A//www.w3.org/2000/svg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'2'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Cpath%20d%3D'M3%209l9-7%209%207v11a2%202%200%200%201-2%202H5a2%202%200%200%201-2-2z'/%3E%3Cpolyline%20points%3D'9%2022%209%2012%2015%2012%2015%2022'/%3E%3C/svg%3E"); }
+  .main-nav a[href$="#about"] { --ico: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A//www.w3.org/2000/svg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'2'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Cpath%20d%3D'M20%2021v-2a4%204%200%200%200-4-4H8a4%204%200%200%200-4%204v2'/%3E%3Ccircle%20cx%3D'12'%20cy%3D'7'%20r%3D'4'/%3E%3C/svg%3E"); }
+  .main-nav a[href="research.html"] { --ico: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A//www.w3.org/2000/svg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'2'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Cpath%20d%3D'M2%203h6a4%204%200%200%201%204%204v14a3%203%200%200%200-3-3H2z'/%3E%3Cpath%20d%3D'M22%203h-6a4%204%200%200%200-4%204v14a3%203%200%200%201%203-3h7z'/%3E%3C/svg%3E"); }
+  .main-nav a[href="projects.html"] { --ico: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A//www.w3.org/2000/svg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'2'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Crect%20x%3D'3'%20y%3D'3'%20width%3D'7'%20height%3D'7'/%3E%3Crect%20x%3D'14'%20y%3D'3'%20width%3D'7'%20height%3D'7'/%3E%3Crect%20x%3D'14'%20y%3D'14'%20width%3D'7'%20height%3D'7'/%3E%3Crect%20x%3D'3'%20y%3D'14'%20width%3D'7'%20height%3D'7'/%3E%3C/svg%3E"); }
+  .main-nav a[href="simulation.html"] { --ico: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A//www.w3.org/2000/svg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'2'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Crect%20x%3D'4'%20y%3D'4'%20width%3D'16'%20height%3D'16'%20rx%3D'2'/%3E%3Crect%20x%3D'9'%20y%3D'9'%20width%3D'6'%20height%3D'6'/%3E%3Cpath%20d%3D'M9%201v3M15%201v3M9%2020v3M15%2020v3M20%209h3M20%2014h3M1%209h3M1%2014h3'/%3E%3C/svg%3E"); }
+  .main-nav a[href="internship.html"] { --ico: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A//www.w3.org/2000/svg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'2'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Crect%20x%3D'2'%20y%3D'7'%20width%3D'20'%20height%3D'14'%20rx%3D'2'/%3E%3Cpath%20d%3D'M16%2021V5a2%202%200%200%200-2-2h-4a2%202%200%200%200-2%202v16'/%3E%3C/svg%3E"); }
+  .main-nav a[href="activities.html"] { --ico: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A//www.w3.org/2000/svg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'2'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Ccircle%20cx%3D'12'%20cy%3D'8'%20r%3D'7'/%3E%3Cpath%20d%3D'M8.21%2013.89L7%2023l5-3%205%203-1.21-9.12'/%3E%3C/svg%3E"); }
+  .main-nav a[href="skills.html"] { --ico: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A//www.w3.org/2000/svg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'2'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Cpath%20d%3D'M14.7%206.3a1%201%200%200%200%200%201.4l1.6%201.6a1%201%200%200%200%201.4%200l3.77-3.77a6%206%200%200%201-7.94%207.94l-6.91%206.91a2.12%202.12%200%200%201-3-3l6.91-6.91a6%206%200%200%201%207.94-7.94l-3.76%203.76z'/%3E%3C/svg%3E"); }
+  .main-nav a[href="certifications.html"] { --ico: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A//www.w3.org/2000/svg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'2'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Cpath%20d%3D'M22%2011.08V12a10%2010%200%201%201-5.93-9.14'/%3E%3Cpolyline%20points%3D'22%204%2012%2014.01%209%2011.01'/%3E%3C/svg%3E"); }
+  .main-nav a[href="hobbies.html"] { --ico: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A//www.w3.org/2000/svg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'2'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Cpath%20d%3D'M20.84%204.61a5.5%205.5%200%200%200-7.78%200L12%205.67l-1.06-1.06a5.5%205.5%200%200%200-7.78%207.78l1.06%201.06L12%2021.23l7.78-7.78%201.06-1.06a5.5%205.5%200%200%200%200-7.78z'/%3E%3C/svg%3E"); }
+
+  .main-nav .nav-cta {
+    --ico: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A//www.w3.org/2000/svg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'2'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Cpath%20d%3D'M4%204h16a2%202%200%200%201%202%202v12a2%202%200%200%201-2%202H4a2%202%200%200%201-2-2V6a2%202%200%200%201%202-2z'/%3E%3Cpolyline%20points%3D'22%2C6%2012%2C13%202%2C6'/%3E%3C/svg%3E");
+    margin-top: auto; justify-content: center; padding: 12px 14px; border-radius: 16px;
+    background: var(--btn-bg); color: var(--btn-text) !important; font-weight: 600;
+    box-shadow: 0 8px 20px var(--btn-glow);
+  }
+  .main-nav .nav-cta:hover { background: var(--btn-bg); transform: translateY(-1px); }
+
+  .nav-toggle { display: none; }
+  .theme-toggle { width: 100%; padding: 10px 14px; border-radius: 14px; }
+
+  /* Glass top bar with breadcrumb and two actions */
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    position: sticky; top: 16px; z-index: 40;
+    width: calc(100% - 40px); max-width: var(--shell-max); margin: 16px auto 14px;
+    padding: 10px 12px 10px 22px;
+    border: 1px solid var(--glass-border); border-radius: 22px; background: var(--header-bg);
+    -webkit-backdrop-filter: var(--bar-blur); backdrop-filter: var(--bar-blur); box-shadow: var(--shadow);
+  }
+  .crumb { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted); }
+  .crumb a { color: var(--muted); }
+  .crumb a:hover { color: var(--ink); text-decoration: none; }
+  .crumb .sep { opacity: 0.6; }
+  .crumb .here { color: var(--ink); font-weight: 600; }
+  .topbar-actions { display: flex; gap: 10px; }
+  .tb-btn {
+    display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border-radius: 14px;
+    font-size: 14px; font-weight: 600; text-decoration: none !important;
+  }
+  .tb-btn::before {
+    content: ""; width: 16px; height: 16px; background: currentColor;
+    -webkit-mask: var(--ico) center / contain no-repeat; mask: var(--ico) center / contain no-repeat;
+  }
+  .tb-ghost { --ico: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A//www.w3.org/2000/svg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'2'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Cpath%20d%3D'M21%2015v4a2%202%200%200%201-2%202H5a2%202%200%200%201-2-2v-4'/%3E%3Cpolyline%20points%3D'7%2010%2012%2015%2017%2010'/%3E%3Cline%20x1%3D'12'%20y1%3D'15'%20x2%3D'12'%20y2%3D'3'/%3E%3C/svg%3E"); border: 1px solid var(--glass-border); color: var(--ink); background: var(--hover-bg); }
+  .tb-ghost:hover { border-color: var(--accent); }
+  .tb-gold { --ico: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A//www.w3.org/2000/svg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'2'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Cpath%20d%3D'M4%204h16a2%202%200%200%201%202%202v12a2%202%200%200%201-2%202H4a2%202%200%200%201-2-2V6a2%202%200%200%201%202-2z'/%3E%3Cpolyline%20points%3D'22%2C6%2012%2C13%202%2C6'/%3E%3C/svg%3E"); background: var(--btn-bg); color: var(--btn-text); box-shadow: 0 8px 20px var(--btn-glow); }
+}
+
+/* ---- Phones ---- */
+@media (max-width: 860px) {
+  .section { padding: 8px 12px; }
+  .section > .wrap { padding: 28px 20px; border-radius: 22px; }
+  .hero { width: calc(100% - 24px); margin-top: 12px; padding: 40px 0 48px; border-radius: 26px; }
+  .hero .wrap { padding: 0 20px; }
+  .page-hero { padding: 22px 14px 6px; }
+}
+
+/* Small fixes for the app shell */
+/* Anchor links (#about, #contact, #explore) should not hide their heading under the sticky bar */
+html { scroll-padding-top: 84px; }
+@media (min-width: 1200px) { html { scroll-padding-top: 100px; } }
+/* Only the description should stretch in an explore card, not the small label above the title */
+.explore-card .card-eyebrow { flex-grow: 0; }
