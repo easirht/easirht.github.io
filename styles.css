@@ -525,12 +525,6 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius
 .site-header { transition: box-shadow 0.3s; }
 .site-header.scrolled { box-shadow: 0 8px 24px rgba(15, 26, 51, 0.1); }
 
-/* Thin gold progress line at the very top (element added by script.js) */
-.scroll-progress {
-  position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 60;
-  background: var(--gold-line); transform: scaleX(0); transform-origin: 0 50%; pointer-events: none;
-}
-
 /* Hover lifts. This block comes BEFORE .reveal so the reveal transition wins while it plays. */
 .fact, .sim-card, .cert-row, .project-media, .chip, .tag { transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s, background 0.25s; }
 .fact:hover, .sim-card:hover, .cert-row:hover { transform: translateY(-4px); border-color: var(--accent); }
@@ -542,21 +536,25 @@ h2::after { content: ""; display: block; width: 48px; height: 4px; border-radius
 .reveal.in { opacity: 1; transform: none; }
 h2.reveal::after { width: 0; transition: width 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.35s; }
 h2.reveal.in::after { width: 48px; }
-@media print { .reveal { opacity: 1 !important; transform: none !important; } .scroll-progress { display: none; } }
+@media print { .reveal { opacity: 1 !important; transform: none !important; } }
 
 /* ==========================================================================
-   JUSTIFIED TEXT — long paragraphs only (needs <html lang="en"> for hyphens)
-   Justify is desktop-only; on phones the lines are too short and it looks gappy.
+   JUSTIFIED TEXT — every paragraph in the page content, on every page and screen size
+   (needs <html lang="en"> for hyphens). Short one-line labels are excluded so they keep
+   their own alignment (a justified single line would jump to the left in centred blocks).
    ========================================================================== */
-.about-copy, .pub-desc, .timeline-body p, .internship-narrative, .project-details p {
+main p, main blockquote, .project-details p {
+  text-align: justify;
+  text-justify: inter-word;
   hyphens: auto;
   -webkit-hyphens: auto;
 }
-@media (min-width: 861px) {
-  .about-copy, .pub-desc, .timeline-body p, .internship-narrative, .project-details p {
-    text-align: justify;
-    text-justify: inter-word;
-  }
+main .eyebrow, main .card-eyebrow, main .hero-greeting, main .hero-tagline, main .hero-location,
+main .hero-research-line, main .pub-authors, main .contact-detail, main .sim-download,
+main .sim-pending p {
+  text-align: inherit;
+  hyphens: manual;
+  -webkit-hyphens: manual;
 }
 
 

@@ -100,24 +100,6 @@ document.querySelectorAll('[data-carousel]').forEach((carousel) => {
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduce || !('IntersectionObserver' in window)) return;
 
-  /* Scroll progress line */
-  var bar = document.createElement('div');
-  bar.className = 'scroll-progress';
-  bar.setAttribute('aria-hidden', 'true');
-  document.body.appendChild(bar);
-  var ticking = false;
-  function updateBar() {
-    var max = document.documentElement.scrollHeight - window.innerHeight;
-    var p = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
-    bar.style.transform = 'scaleX(' + p + ')';
-    ticking = false;
-  }
-  addEventListener('scroll', function () {
-    if (!ticking) { ticking = true; requestAnimationFrame(updateBar); }
-  }, { passive: true });
-  addEventListener('resize', updateBar);
-  updateBar();
-
   /* Stat numbers count up from 0 */
   document.querySelectorAll('.stat-num').forEach(function (el) {
     var n = parseInt(el.textContent, 10);
