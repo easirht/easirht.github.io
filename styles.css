@@ -842,3 +842,22 @@ html { scroll-padding-top: 84px; }
 @media (min-width: 1200px) { html { scroll-padding-top: 100px; } }
 /* Only the description should stretch in an explore card, not the small label above the title */
 .explore-card .card-eyebrow { flex-grow: 0; }
+
+/* ==========================================================================
+   HIGHLIGHTS SLIDER — image on the left, title + caption on the right
+   Reuses the [data-carousel] script, so no JavaScript changes are needed.
+   ========================================================================== */
+.showcase { margin-top: 20px; }
+.carousel-showcase { aspect-ratio: auto; max-width: none; margin: 0; border-radius: 28px; overflow: hidden; background: var(--card); border: 1px solid var(--line); }
+.carousel-showcase .carousel-track { height: auto; }
+.carousel-showcase .slide { flex: 0 0 100%; margin: 0; min-width: 0; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); min-height: 420px; }
+.carousel-showcase .slide img { width: 100%; height: 100%; min-height: 420px; object-fit: cover; flex: none; }
+.carousel-showcase figcaption { align-self: center; padding: 32px 64px 48px 48px; }
+.carousel-showcase figcaption h3 { font-family: var(--font-serif); font-style: italic; font-size: clamp(26px, 3vw, 40px); line-height: 1.15; color: var(--ink); margin-bottom: 14px; text-wrap: balance; }
+.carousel-showcase figcaption p { color: var(--muted); font-size: 16px; line-height: 1.65; }
+.carousel-showcase .carousel-dots { bottom: 16px; }
+@media (max-width: 1100px) {
+  .carousel-showcase .slide { grid-template-columns: 1fr; min-height: 0; }
+  .carousel-showcase .slide img { height: 260px; min-height: 0; }
+  .carousel-showcase figcaption { padding: 24px 24px 52px; }
+}
