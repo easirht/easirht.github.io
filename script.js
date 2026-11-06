@@ -339,4 +339,39 @@ document.querySelectorAll('[data-carousel]').forEach((carousel) => {
     bar.appendChild(el);
   });
   document.body.appendChild(bar);
+
+  /* Scroll behaviour: scrolling down slides the bar off to the right, leaving a small
+     handle on the edge; scrolling up (or tapping the handle) brings it back. */
+  var fab = document.createElement('button');
+  fab.type = 'button';
+  fab.className = 'tab-handle';
+  fab.setAttribute('aria-label', 'Show navigation bar');
+  fab.innerHTML = svg('M15 6l-6 6 6 6');
+  document.body.appendChild(fab);
+
+  var collapsed = false;
+  function setCollapsed(v) {
+    if (v === collapsed) return;
+    collapsed = v;
+    bar.classList.toggle('is-collapsed', v);
+    fab.classList.toggle('is-visible', v);
+    bar.setAttribute('aria-hidden', v ? 'true' : 'false');
+  }
+  fab.addEventListener('click', function () { setCollapsed(false); });
+
+  var lastY = window.scrollY, pending = false;
+  function onScroll() {
+    pending = false;
+    var y = window.scrollY, dy = y - lastY;
+    var nearBottom = y + window.innerHeight >= document.documentElement.scrollHeight - 48;
+    var menuOpen = document.getElementById('main-nav') &&
+                   document.getElementById('main-nav').classList.contains('is-open');
+    if (y < 120 || nearBottom || menuOpen) setCollapsed(false);
+    else if (dy > 6) setCollapsed(true);
+    else if (dy < -6) setCollapsed(false);
+    if (Math.abs(dy) > 6) lastY = y;
+  }
+  addEventListener('scroll', function () {
+    if (!pending) { pending = true; requestAnimationFrame(onScroll); }
+  }, { passive: true });
 })();

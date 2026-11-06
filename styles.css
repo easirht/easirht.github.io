@@ -939,3 +939,26 @@ html { scroll-padding-top: 84px; }
    ========================================================================== */
 :root { --hairline: 1px; }
 @media (min-resolution: 2dppx) { :root { --hairline: 0.5px; } }
+
+/* ---- Phone: bottom bar slides to the side while scrolling down ---- */
+.tab-handle { display: none; }
+@media (max-width: 767px) {
+  .tabbar {
+    transition: transform 0.45s cubic-bezier(0.22, 0.8, 0.2, 1), opacity 0.3s ease, visibility 0s;
+  }
+  .tabbar.is-collapsed {
+    transform: translateX(calc(100% + 24px)); opacity: 0; visibility: hidden; pointer-events: none;
+    transition: transform 0.45s cubic-bezier(0.22, 0.8, 0.2, 1), opacity 0.3s ease, visibility 0s 0.45s;
+  }
+  .tab-handle {
+    position: fixed; z-index: 89; right: 0; bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+    display: grid; place-items: center; width: 34px; height: 56px; padding: 0;
+    border: var(--hairline) solid var(--glass-border); border-right: none; border-radius: 18px 0 0 18px;
+    background: var(--menu-bg); color: var(--ink); box-shadow: var(--shadow); cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transform: translateX(100%); opacity: 0; visibility: hidden;
+    transition: transform 0.45s cubic-bezier(0.22, 0.8, 0.2, 1) 0.1s, opacity 0.3s ease 0.1s, visibility 0s 0.55s;
+  }
+  .tab-handle svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .tab-handle.is-visible { transform: none; opacity: 1; visibility: visible; transition-delay: 0.1s, 0.1s, 0s; }
+}
