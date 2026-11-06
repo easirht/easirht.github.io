@@ -973,3 +973,23 @@ html { scroll-padding-top: 84px; }
   }
   .tab-handle.is-visible svg { animation: handle-nudge 1.1s ease-in-out 1.1s 4; }
 }
+
+/* ==========================================================================
+   EXPLORE CARDS (icon tile + hover lift) and SLIDER CATEGORY TAG
+   ========================================================================== */
+.explore-card { transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; }
+.explore-card:hover { transform: translateY(-4px); border-color: rgba(235, 213, 138, 0.45); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28); }
+.explore-card:hover, .explore-card:hover * { text-decoration: none; }
+.card-ico {
+  display: grid; place-items: center; width: 42px; height: 42px; margin-bottom: 14px; border-radius: 13px;
+  background: rgba(235, 213, 138, 0.12); color: #EBD58A; border: var(--hairline) solid rgba(235, 213, 138, 0.25);
+}
+.card-ico svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+html[data-theme="light"] .card-ico { color: #8A6D12; background: rgba(201, 162, 39, 0.12); }
+
+.slide-tag {
+  display: inline-block; margin-bottom: 12px; padding: 4px 11px; border-radius: 999px;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: #EBD58A; border: var(--hairline) solid rgba(235, 213, 138, 0.4); background: rgba(235, 213, 138, 0.08);
+}
+html[data-theme="light"] .slide-tag { color: #8A6D12; }
