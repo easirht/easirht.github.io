@@ -267,3 +267,76 @@ document.querySelectorAll('[data-carousel]').forEach((carousel) => {
     main.insertBefore(bar, main.firstChild);
   }
 })();
+
+
+// ============================================================================
+// PHONE APP SHELL: page title in the top bar, CV icon, and the bottom tab bar.
+// Everything here is hidden by CSS above 767px, so laptop and tablet are unchanged.
+// Pairs with the PHONE APP SHELL block at the bottom of styles.css.
+// ============================================================================
+(function () {
+  if (window.__phoneShell) return;
+  window.__phoneShell = true;
+
+  var page = (location.pathname.split('/').pop() || 'index').replace(/\.html$/, '') || 'index';
+  var titles = {
+    index: 'Overview', research: 'Research', projects: 'Projects', simulation: 'Simulation',
+    internship: 'Internship', activities: 'Activities & Awards', skills: 'Skills',
+    certifications: 'Certifications', hobbies: 'Hobbies'
+  };
+  var wm = document.querySelector('.wordmark');
+  if (wm) wm.setAttribute('data-title', titles[page] || 'Overview');
+
+  var svg = function (d) {
+    return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + d + '"/></svg>';
+  };
+  var ICON = {
+    home: 'M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z',
+    research: 'M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5M9 7h6',
+    projects: 'M12 2l9 5-9 5-9-5zM3 12l9 5 9-5M3 17l9 5 9-5',
+    mail: 'M4 4h16v16H4zM4 6l8 7 8-7',
+    more: 'M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z',
+    dl: 'M12 3v12M7 10l5 5 5-5M4 21h16'
+  };
+
+  var inner = document.querySelector('.header-inner');
+  if (inner) {
+    var cv = document.createElement('a');
+    cv.className = 'tb-icon';
+    cv.href = 'assets/cv/Easir_Rahat_CV.pdf';
+    cv.setAttribute('download', '');
+    cv.setAttribute('aria-label', 'Download CV');
+    cv.innerHTML = svg(ICON.dl);
+    inner.appendChild(cv);
+  }
+
+  var onContact = location.hash === '#contact';
+  var active = page === 'index' ? (onContact ? 'contact' : 'home')
+             : page === 'research' ? 'research'
+             : page === 'projects' ? 'projects' : 'more';
+
+  var bar = document.createElement('nav');
+  bar.className = 'tabbar';
+  bar.setAttribute('aria-label', 'Quick navigation');
+  [
+    ['home', 'Overview', 'index.html'],
+    ['research', 'Research', 'research.html'],
+    ['projects', 'Projects', 'projects.html'],
+    ['contact', 'Contact', 'index.html#contact', 'mail'],
+    ['more', 'More', null]
+  ].forEach(function (t) {
+    var el = document.createElement(t[2] ? 'a' : 'button');
+    el.className = 'tab' + (active === t[0] ? ' is-active' : '');
+    if (t[2]) el.href = t[2]; else el.type = 'button';
+    el.innerHTML = svg(ICON[t[3] || t[0]]) + '<span>' + t[1] + '</span>';
+    if (!t[2]) {
+      el.setAttribute('aria-label', 'More pages');
+      el.addEventListener('click', function () {
+        var burger = document.getElementById('nav-toggle');
+        if (burger) burger.click();
+      });
+    }
+    bar.appendChild(el);
+  });
+  document.body.appendChild(bar);
+})();
