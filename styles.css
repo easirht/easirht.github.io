@@ -850,17 +850,20 @@ html { scroll-padding-top: 84px; }
    ========================================================================== */
 .showcase { width: calc(100% - 40px); max-width: var(--shell-max); margin: 10px auto; }
 .carousel-showcase {
+  --slide-h: 420px;
   aspect-ratio: auto; max-width: none; margin: 0; overflow: hidden; border-radius: 28px;
   background: var(--glass); border: 1px solid var(--glass-border); box-shadow: var(--shadow);
   -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
 }
 .carousel-showcase .carousel-track { height: auto; }
 .carousel-showcase .slide {
-  flex: 0 0 100%; margin: 0; min-width: 0; height: 420px;
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  flex: 0 0 100%; margin: 0; min-width: 0; height: var(--slide-h); overflow: hidden;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: var(--slide-h);
 }
-.carousel-showcase .slide img { width: 100%; height: 100%; min-height: 0; object-fit: cover; flex: none; }
-.carousel-showcase figcaption { align-self: center; padding: 28px 64px 44px 48px; }
+/* Fixed pixel height (not 100%): Safari/iOS ignores height:100% on grid items and lets the photo spill over the caption */
+.carousel-showcase .slide img { display: block; width: 100%; height: var(--slide-h); max-height: var(--slide-h); min-height: 0; object-fit: cover; flex: none; }
+
+.carousel-showcase figcaption { position: relative; z-index: 1; align-self: center; padding: 28px 64px 44px 48px; }
 .carousel-showcase figcaption h3 {
   font-family: var(--font-serif); font-style: italic; font-size: clamp(24px, 2.6vw, 36px);
   line-height: 1.15; color: var(--ink); margin-bottom: 14px; text-wrap: balance;
@@ -869,6 +872,8 @@ html { scroll-padding-top: 84px; }
 .carousel-showcase .carousel-dots { bottom: 16px; }
 @media (max-width: 1100px) {
   .showcase { width: calc(100% - 24px); }
-  .carousel-showcase .slide { grid-template-columns: 1fr; grid-template-rows: 240px auto; height: auto; }
+  .carousel-showcase { --slide-h: 240px; }
+  .carousel-showcase .slide { grid-template-columns: 1fr; grid-template-rows: var(--slide-h) auto; height: auto; }
   .carousel-showcase figcaption { padding: 24px 24px 56px; }
+  .carousel-showcase .carousel-arrow { top: calc(var(--slide-h) / 2); }
 }
