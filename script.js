@@ -157,7 +157,7 @@ document.querySelectorAll('[data-carousel]').forEach((carousel) => {
   window.__siteShell = true;
 
   var root = document.documentElement;
-  var NAV_BG = { dark: '#070C1A', light: '#FAF8F3' };
+  var NAV_BG = { dark: '#10151C', light: '#FAF8F3' };
 
   /* ---- Theme (dark is the default) ---- */
   var saved = null;
