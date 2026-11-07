@@ -375,3 +375,98 @@ document.querySelectorAll('[data-carousel]').forEach((carousel) => {
     if (!pending) { pending = true; requestAnimationFrame(onScroll); }
   }, { passive: true });
 })();
+
+
+// ============================================================================
+// CV DOWNLOAD CONFIRMATION: clicking any "Download CV" link opens a small confirm box
+// first. "Download" starts the download, "Cancel" / Esc / clicking outside closes it.
+// Works for every PDF link on every page, so nothing else needs to change.
+// ============================================================================
+(function () {
+  if (window.__cvConfirm) return;
+  window.__cvConfirm = true;
+
+  var bypass = false, lastFocus = null, pendingHref = '', toastTimer = null;
+
+  var overlay = document.createElement('div');
+  overlay.className = 'confirm-overlay';
+  overlay.hidden = true;
+  overlay.innerHTML =
+    '<div class="confirm-box" role="dialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-text">' +
+      '<div class="confirm-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg></div>' +
+      '<h3 id="confirm-title">Download CV?</h3>' +
+      '<p id="confirm-text"></p>' +
+      '<div class="confirm-actions">' +
+        '<button type="button" class="confirm-btn confirm-cancel">Cancel</button>' +
+        '<button type="button" class="confirm-btn confirm-ok">Download</button>' +
+      '</div>' +
+    '</div>';
+  document.body.appendChild(overlay);
+
+  var text = overlay.querySelector('#confirm-text');
+  var okBtn = overlay.querySelector('.confirm-ok');
+  var cancelBtn = overlay.querySelector('.confirm-cancel');
+
+  var toast = document.createElement('div');
+  toast.className = 'confirm-toast';
+  toast.setAttribute('role', 'status');
+  document.body.appendChild(toast);
+
+  function fileName(href) { return decodeURIComponent((href.split('?')[0].split('/').pop()) || 'CV.pdf'); }
+
+  function openBox(href) {
+    pendingHref = href;
+    text.textContent = 'This will download ' + fileName(href) + ' to your device.';
+    overlay.hidden = false;
+    requestAnimationFrame(function () { overlay.classList.add('is-open'); });
+    document.documentElement.classList.add('confirm-lock');
+    okBtn.focus();
+  }
+  function closeBox() {
+    overlay.classList.remove('is-open');
+    document.documentElement.classList.remove('confirm-lock');
+    setTimeout(function () { overlay.hidden = true; }, 200);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('is-on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove('is-on'); }, 3200);
+  }
+
+  document.addEventListener('click', function (e) {
+    if (bypass) return;
+    var a = e.target.closest ? e.target.closest('a[href$=".pdf"]') : null;
+    if (!a || !overlay.hidden) return;
+    e.preventDefault();
+    lastFocus = a;
+    openBox(a.getAttribute('href'));
+  });
+
+  okBtn.addEventListener('click', function () {
+    var href = pendingHref;
+    closeBox();
+    var t = document.createElement('a');
+    t.href = href;
+    t.setAttribute('download', '');
+    t.style.display = 'none';
+    document.body.appendChild(t);
+    bypass = true;
+    t.click();
+    bypass = false;
+    t.remove();
+    showToast('Download started: ' + fileName(href));
+  });
+  cancelBtn.addEventListener('click', closeBox);
+  overlay.addEventListener('click', function (e) { if (e.target === overlay) closeBox(); });
+  document.addEventListener('keydown', function (e) {
+    if (overlay.hidden) return;
+    if (e.key === 'Escape') { closeBox(); return; }
+    if (e.key === 'Tab') {            // keep keyboard focus inside the box
+      var first = cancelBtn, last = okBtn;
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+})();

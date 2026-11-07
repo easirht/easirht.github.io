@@ -1024,3 +1024,47 @@ body::before {
   .hero-grid { grid-template-columns: 1.55fr 0.65fr; gap: 36px; }
 }
 .hero-pitch { max-width: none; hyphens: manual; -webkit-hyphens: manual; }
+
+/* ==========================================================================
+   HIGHLIGHTS heading above the slider
+   ========================================================================== */
+.showcase-head { padding: 6px 6px 18px; }
+.showcase-head h2 { margin-bottom: 8px; }
+.showcase-sub { color: var(--muted); font-size: 15px; text-align: left; hyphens: manual; -webkit-hyphens: manual; max-width: none; }
+
+/* ==========================================================================
+   CV DOWNLOAD CONFIRM BOX + "download started" toast
+   ========================================================================== */
+.confirm-overlay {
+  position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 20px;
+  background: rgba(6, 10, 16, 0.55); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  opacity: 0; transition: opacity 0.2s ease;
+}
+.confirm-overlay[hidden] { display: none; }
+.confirm-overlay.is-open { opacity: 1; }
+.confirm-box {
+  width: min(380px, 100%); padding: 28px 26px 22px; text-align: center;
+  background: var(--menu-bg); color: var(--ink); border: var(--hairline) solid var(--glass-border);
+  border-radius: 26px; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+  transform: translateY(14px) scale(0.97); transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+.confirm-overlay.is-open .confirm-box { transform: none; }
+.confirm-icon { width: 52px; height: 52px; margin: 0 auto 14px; display: grid; place-items: center; border-radius: 16px; background: var(--gold-btn); color: #0F1A33; }
+.confirm-icon svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.confirm-box h3 { font-size: 1.35rem; margin-bottom: 8px; }
+.confirm-box p { color: var(--muted); font-size: 15px; line-height: 1.55; text-align: center; hyphens: manual; -webkit-hyphens: manual; overflow-wrap: anywhere; margin: 0 0 22px; }
+.confirm-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.confirm-btn { padding: 12px 14px; border-radius: 14px; font: 600 15px var(--font-sans); cursor: pointer; border: var(--hairline) solid var(--glass-border); -webkit-tap-highlight-color: transparent; }
+.confirm-cancel { background: var(--glass); color: var(--ink); }
+.confirm-cancel:hover { background: var(--card); }
+.confirm-ok { background: var(--gold-btn); color: #0F1A33; border-color: transparent; box-shadow: 0 8px 22px var(--btn-glow); }
+.confirm-ok:hover { filter: brightness(1.05); }
+html.confirm-lock { overflow: hidden; }
+.confirm-toast {
+  position: fixed; z-index: 210; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 20px);
+  padding: 12px 18px; border-radius: 14px; font-size: 14px; font-weight: 500; max-width: calc(100vw - 32px); text-align: center;
+  background: var(--menu-bg); color: var(--ink); border: var(--hairline) solid var(--glass-border); box-shadow: var(--shadow);
+  opacity: 0; pointer-events: none; transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.confirm-toast.is-on { opacity: 1; transform: translate(-50%, 0); }
+@media (max-width: 767px) { .confirm-toast { bottom: calc(100px + env(safe-area-inset-bottom, 0px)); } }
