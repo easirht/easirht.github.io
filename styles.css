@@ -1016,3 +1016,11 @@ body::before {
 .stat-b { background: linear-gradient(145deg, rgba(70, 185, 170, 0.22), rgba(255, 255, 255, 0.04)); }
 .stat-c { background: linear-gradient(145deg, rgba(220, 170, 100, 0.20), rgba(255, 255, 255, 0.04)); }
 .stat-d { background: linear-gradient(145deg, rgba(120, 150, 195, 0.22), rgba(255, 255, 255, 0.04)); }
+
+/* ==========================================================================
+   HERO: wider text column (towards the photo) and no mid-word line breaks
+   ========================================================================== */
+@media (min-width: 1101px) {
+  .hero-grid { grid-template-columns: 1.55fr 0.65fr; gap: 36px; }
+}
+.hero-pitch { max-width: none; hyphens: manual; -webkit-hyphens: manual; }
