@@ -1070,18 +1070,18 @@ html.confirm-lock { overflow: hidden; }
 @media (max-width: 767px) { .confirm-toast { bottom: calc(100px + env(safe-area-inset-bottom, 0px)); } }
 
 /* ==========================================================================
-   SCROLL SIGNATURE — word-by-word text fill, blur-in reveal, photo parallax
+   SCROLL SIGNATURE — word-by-word text fill, photo parallax
    ========================================================================== */
 .word-fill .w { opacity: 0.25; transition: opacity 0.35s ease, color 0.35s ease; }
 .word-fill .w.on { opacity: 1; }
 .word-fill .w.edge { color: var(--accent); }
 
-/* Reveal: rise + soft scale + blur-to-sharp (replaces the plain fade-up) */
+/* Reveal: simple rise + fade (no blur) */
 .reveal {
-  opacity: 0; transform: translateY(30px) scale(0.985); filter: blur(8px);
-  transition: opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.9s ease;
+  opacity: 0; transform: translateY(26px); filter: none;
+  transition: opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
-.reveal.in { opacity: 1; transform: none; filter: blur(0); }
+.reveal.in { opacity: 1; transform: none; filter: none; }
 
 /* Portrait photo drifts inside its frame while the hero scrolls */
 .portrait-frame img { transform: translate3d(0, var(--py, 0px), 0) scale(1.12); will-change: transform; }
