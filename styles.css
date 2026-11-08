@@ -1091,6 +1091,13 @@ html.confirm-lock { overflow: hidden; }
    ABOUT: three short paragraphs
    ========================================================================== */
 .about-text { display: flex; flex-direction: column; gap: 16px; }
-.about-text .about-copy { margin: 0; max-width: 74ch; }
+.about-text .about-copy { margin: 0; max-width: none; hyphens: manual; -webkit-hyphens: manual; }
 
 .hero-research-line .ri { white-space: nowrap; }
+
+/* Person link (supervisor name): accent colour, no underline */
+.person-link { color: var(--link, var(--accent)); font-weight: 600; text-decoration: none; transition: color 0.2s ease, filter 0.2s ease; }
+.person-link:hover { filter: brightness(1.15); }
+
+:root { --link: var(--accent); }
+html[data-theme="light"] { --link: #8A6D12; }
