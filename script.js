@@ -157,12 +157,12 @@ document.querySelectorAll('[data-carousel]').forEach((carousel) => {
   window.__siteShell = true;
 
   var root = document.documentElement;
-  var NAV_BG = { dark: '#0A0A0C', light: '#FAF8F3' };
+  var NAV_BG = { dark: '#111111', light: '#F3EEE3' };
 
   /* ---- Theme (dark is the default) ---- */
   var saved = null;
   try { saved = localStorage.getItem('theme'); } catch (e) {}
-  var theme = saved === 'light' ? 'light' : 'dark';
+  var theme = saved === 'dark' ? 'dark' : 'light';
 
   var meta = document.querySelector('meta[name="theme-color"]');
   if (!meta) {
