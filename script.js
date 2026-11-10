@@ -117,11 +117,9 @@ document.querySelectorAll('[data-carousel]').forEach((carousel) => {
 
   /* Fade-up on scroll */
   var targets = [
-    'h2', '.about-copy', '.fact', '.research-quote', '.tag-row', '.pub', '.project-card',
-    '.timeline li', '.skills-cols > div', '.cert-row', '.explore-card', '.sim-card',
-    '.sim-feature', '.hobby-strip img', '.internship-narrative', '.page-hero h1',
-    '.page-hero-desc', '.contact-headline', '.contact-pills', '.contact-detail'
-  ].join(',');
+    '.fact', '.pub', '.project-card', '.timeline li', '.skills-cols > div', '.cert-row',
+    '.explore-card', '.sim-card', '.sim-feature', '.hobby-strip img'
+  ].join(',');   // only cards rise in; headings and paragraphs stay fixed
 
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
@@ -159,10 +157,11 @@ document.querySelectorAll('[data-carousel]').forEach((carousel) => {
   var root = document.documentElement;
   var NAV_BG = { dark: '#111111', light: '#F3EEE3' };
 
-  /* ---- Theme (dark is the default) ---- */
+  /* ---- Theme (follows the device until the visitor chooses) ---- */
   var saved = null;
   try { saved = localStorage.getItem('theme'); } catch (e) {}
-  var theme = saved === 'dark' ? 'dark' : 'light';
+  var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  var theme = (saved === 'dark' || saved === 'light') ? saved : (mq && mq.matches ? 'dark' : 'light');
 
   var meta = document.querySelector('meta[name="theme-color"]');
   if (!meta) {
@@ -195,6 +194,11 @@ document.querySelectorAll('[data-carousel]').forEach((carousel) => {
     applyTheme(theme === 'dark' ? 'light' : 'dark', true);
   });
   applyTheme(theme, false);
+  // Until the visitor picks a theme with the button, follow the device setting live
+  if (mq && mq.addEventListener) mq.addEventListener('change', function (e) {
+    var chosen = null; try { chosen = localStorage.getItem('theme'); } catch (err) {}
+    if (chosen !== 'dark' && chosen !== 'light') applyTheme(e.matches ? 'dark' : 'light', false);
+  });
 
   var headerInner = document.querySelector('.header-inner');
   if (headerInner) {
@@ -472,76 +476,3 @@ document.querySelectorAll('[data-carousel]').forEach((carousel) => {
 })();
 
 
-// ============================================================================
-// SCROLL SIGNATURE (extra scroll animations). Skipped for "reduce motion" visitors.
-//  1. About / Contact paragraph: words light up one by one as you scroll, with a gold leading edge.
-//  2. Photo inside the portrait frame drifts slightly (parallax) while you scroll the hero.
-// Pairs with the SCROLL SIGNATURE block at the bottom of styles.css.
-// ============================================================================
-(function () {
-  if (window.__scrollSignature) return;
-  window.__scrollSignature = true;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  var fills = Array.prototype.slice.call(document.querySelectorAll('#about .about-copy, #contact .about-copy'));
-  function wrapWords(node) {
-    Array.prototype.slice.call(node.childNodes).forEach(function (n) {
-      if (n.nodeType === 3) {
-        var parts = n.textContent.split(/(\s+)/), frag = document.createDocumentFragment();
-        parts.forEach(function (part) {
-          if (!part) return;
-          if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
-          var s = document.createElement('span');
-          s.className = 'w';
-          s.textContent = part;
-          frag.appendChild(s);
-        });
-        node.replaceChild(frag, n);
-      } else if (n.nodeType === 1) {
-        wrapWords(n);               // keep links and other inline elements, wrap their words too
-      }
-    });
-  }
-  fills.forEach(function (el) {
-    wrapWords(el);
-    el.classList.add('word-fill');
-    el._words = el.querySelectorAll('.w');
-    el._k = -1;
-  });
-
-  var img = document.querySelector('.portrait-frame img');
-  var hero = document.querySelector('.hero');
-  var ticking = false;
-
-  function clamp(v) { return Math.max(0, Math.min(1, v)); }
-
-  function update() {
-    ticking = false;
-    var vh = window.innerHeight;
-
-    fills.forEach(function (el) {
-      var r = el.getBoundingClientRect();
-      var p = clamp((vh * 0.88 - r.top) / (vh * 0.5 + r.height * 0.5));
-      var n = el._words.length;
-      var k = Math.round(p * n);
-      if (k === el._k) return;
-      el._k = k;
-      for (var i = 0; i < n; i++) {
-        var c = el._words[i].classList;
-        c.toggle('on', i < k);
-        c.toggle('edge', i < k && i >= k - 3 && k < n);
-      }
-    });
-
-    if (img && hero) {
-      var p2 = clamp(window.scrollY / Math.max(hero.offsetHeight, 1));
-      img.style.setProperty('--py', (-14 + p2 * 28).toFixed(1) + 'px');
-    }
-  }
-
-  addEventListener('scroll', function () {
-    if (!ticking) { ticking = true; requestAnimationFrame(update); }
-  }, { passive: true });
-  addEventListener('resize', update);
-  update();
-})();
