@@ -1585,3 +1585,61 @@ html[data-theme="light"] .tb-ghost { border-color: rgba(36, 79, 107, 0.3); }
     -webkit-backdrop-filter: none; backdrop-filter: none; border-color: rgba(238, 244, 247, 0.08);
   }
 }
+
+/* ==========================================================================
+   PROJECTS: tidy, even cards (image on a fixed frame, text aligned, buttons in one row)
+   ========================================================================== */
+.project-grid { gap: 28px; align-items: stretch; }
+.project-card { border-top: var(--hairline) solid var(--glass-border); border-radius: 16px; box-shadow: none; }
+.project-card:hover { transform: none; border-color: var(--tint-line); }
+.project-card .project-media { aspect-ratio: 16 / 9; overflow: hidden; background: var(--surface-2); }
+.project-card .project-media img { width: 100%; height: 100%; object-fit: cover; }
+.project-card > .project-media, .project-card > .carousel { margin: 0 0 18px; }
+.project-card .card-eyebrow { font-size: 11.5px; letter-spacing: 0.04em; }
+.project-card > h3 { font-size: 1.2rem; line-height: 1.3; }
+.project-card > p { font-size: 14.5px; line-height: 1.65; text-align: left; hyphens: manual; -webkit-hyphens: manual; }
+.project-card :is(div, p, span):has(> .btn, > .pill-link) { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 16px; }
+.project-card .btn, .project-card .pill-link { padding: 9px 18px; font-size: 13.5px; font-weight: 500; }
+html[data-theme="light"] .project-card .btn-outline,
+html[data-theme="light"] .project-card .pill-link:not(.pill-primary) { color: #244F6B; border: 1px solid rgba(36, 79, 107, 0.35); background: transparent; }
+html[data-theme="light"] .project-card .btn-outline:hover { background: rgba(36, 79, 107, 0.08); }
+
+/* Wide card: image on the left, all text on the right (works for a single image or a carousel) */
+@media (min-width: 900px) {
+  .project-card-wide { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); column-gap: 28px; align-content: start; padding: 0 0 24px; }
+  .project-card-wide > .project-media, .project-card-wide > .carousel { grid-column: 1; grid-row: 1 / span 12; margin: 0; height: 100%; min-height: 320px; aspect-ratio: auto; }
+  .project-card-wide > .project-media img { object-fit: contain; background: #0E1020; }
+  .project-card-wide > :not(.project-media):not(.carousel) { grid-column: 2; margin-left: 0; margin-right: 24px; }
+  .project-card-wide > .card-eyebrow { margin-top: 24px; }
+}
+@media (max-width: 899px) { .project-card-wide { display: flex; flex-direction: column; } }
+
+/* ==========================================================================
+   FULL-WIDTH TEXT: paragraphs use the whole content width on every page
+   (Internship, Research, Projects, Activities, Skills, etc.), not a narrow column on the left.
+   ========================================================================== */
+main .internship-narrative, main .research-quote, main .pub-desc, main .pub-head h3,
+main .timeline-body p, main .project-details p, main .page-hero-desc, main .about-copy,
+main blockquote, main .section p, main .wrap > p {
+  max-width: none;
+}
+#contact .about-copy, #contact .contact-note, #contact .contact-detail { max-width: 640px; }
+
+/* Carousels: same frame size across cards, and a sensible height on the Internship page */
+.project-card:not(.project-card-wide) > .carousel { aspect-ratio: 16 / 9; height: auto; }
+.section > .wrap > .carousel { aspect-ratio: 21 / 9; height: auto; margin-top: 24px; border-radius: 14px; overflow: hidden; }
+@media (max-width: 767px) { .section > .wrap > .carousel { aspect-ratio: 4 / 3; } }
+
+/* Activities: text on the left, photos on the right, so the card fills its width */
+.timeline > li { padding-bottom: 22px; }
+.timeline-body { padding: 18px 22px; box-shadow: none; }
+@media (min-width: 900px) {
+  .timeline-body:has(> .carousel) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 400px); column-gap: 32px; align-items: center; }
+  .timeline-body:has(> .carousel) > h3 { grid-column: 1; grid-row: 1; align-self: end; margin-bottom: 8px; }
+  .timeline-body:has(> .carousel) > p { grid-column: 1; grid-row: 2; align-self: start; }
+  .timeline-body:has(> .carousel) > .carousel { grid-column: 2; grid-row: 1 / span 2; width: 100%; max-width: none; margin: 0; aspect-ratio: 16 / 10; }
+}
+
+/* Profile photo: a light border around the frame */
+.portrait-frame { border: 2px solid rgba(36, 79, 107, 0.28) !important; }
+html[data-theme="dark"] .portrait-frame { border-color: rgba(238, 244, 247, 0.30) !important; }
